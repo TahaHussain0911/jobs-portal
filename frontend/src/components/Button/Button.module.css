@@ -1,0 +1,18 @@
+.btnClass {
+  outline: none;
+  border: none;
+  padding: 10px 30px;
+  border-radius: var(--btn-radius);
+  transition: 0.2s all linear;
+  font-size: var(--fs-small);
+  font-family: var(--ff-primary-semiBold);
+  border: 1px solid var(--main-color);
+}
+.btnClass[data-variant="primary"] {
+  background-color: var(--main-color);
+  color: var(--white-color);
+}
+.btnClass[data-variant="secondary"] {
+  background-color: var(--white-color);
+  color: var(--main-color);
+}
