@@ -4,7 +4,6 @@ const connectDB = require("./database/connect");
 const { databaseUrl, serverPort } = require("./helper/credentials");
 const app = express();
 app.use(express.json());
-console.log(databaseUrl,'databaseUrl');
 
 const start = async () => {
   try {
