@@ -11,7 +11,8 @@ import {
   quickLinks,
 } from "../../helper/contants";
 import classes from "./Footer.module.css";
-import { FaFacebookF, FaYoutube } from "react-icons/fa6";
+import { FaFacebookF, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import { FaInstagram } from "react-icons/fa";
 const Footer = () => {
   const navigate = useNavigate();
 
@@ -70,6 +71,8 @@ const Footer = () => {
               <div className={classes.socialLinks}>
                 <FaFacebookF />
                 <FaYoutube />
+                <FaInstagram />
+                <FaXTwitter />
               </div>
             </div>
           </div>
