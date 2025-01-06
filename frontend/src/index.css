@@ -4,10 +4,13 @@
   --heading-color: #303030;
   --card-heading-color: #18191c;
   --text-color: #5e6670;
+  --light-text-color: #767f8c;
   --white-color: #ffff;
   --black-color: #0000;
   --placeholder-color: #9199a3;
   --link-color: #9199a3;
+  --border-color: #efe2f8;
+  --card-bg-color: #f8f2fc;
   --btn-radius: 4px;
   --fs-small: 16px;
   --global-linear-gradient: linear-gradient(
@@ -60,7 +63,7 @@ p {
   font-size: 16px;
 }
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 body h1 {
   font-size: 42px;

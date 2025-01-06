@@ -37,11 +37,15 @@ const Footer = () => {
           active && classes.menuActive,
           customClass,
         ].join(" ")}
-        onClick={() => {
-          navigate(path);
-        }}
       >
-        <span className={classes.link}>{label}</span>
+        <span
+          className={classes.link}
+          onClick={() => {
+            navigate(path);
+          }}
+        >
+          {label}
+        </span>
       </div>
     );
   };
