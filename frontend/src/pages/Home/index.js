@@ -1,13 +1,14 @@
 import React from "react";
-import Header from "../../components/Header";
 import classes from "./Home.module.css";
+import HeroSection from "../../containers/HeroSection";
+import Header from "../../containers/Header";
+import Footer from "../../containers/Footer";
 const Home = () => {
   return (
     <>
       <Header />
-      <div className={classes.heroSection}>
-
-      </div>
+      <HeroSection />
+      <Footer />
     </>
   );
 };

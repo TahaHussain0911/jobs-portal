@@ -7,16 +7,6 @@
   justify-content: space-between;
   align-items: center;
 }
-.imageLogo {
-  width: 170px;
-  height: 27px;
-  cursor: pointer;
-}
-.imageLogo img {
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-}
 .menuItems {
   display: flex;
   gap: 40px;
@@ -28,10 +18,9 @@
   align-items: center;
 }
 .linkItem {
-  text-decoration: none;
   color: var(--heading-color);
   font-family: var(--ff-primary-med);
 }
-.linkItem.active{
-    color: var(--main-color);
+.linkItem.active {
+  color: var(--main-color);
 }

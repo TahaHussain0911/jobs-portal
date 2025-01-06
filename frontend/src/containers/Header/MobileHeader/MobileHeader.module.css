@@ -37,11 +37,11 @@
 }
 .menuItem svg {
   font-size: 14px;
-  color: #5e6670bd;
+  color: var(--link-color);
 }
 .menuItem .link {
   font-size: 14px;
-  color: #5e6670bd;
+  color: var(--link-color);
   font-family: var(--ff-primary-med);
 }
 .drawerContainer {

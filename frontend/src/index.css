@@ -1,13 +1,22 @@
 :root {
   --main-color: #6300b3;
+  --main-light-color: #ae71db;
   --heading-color: #303030;
   --card-heading-color: #18191c;
   --text-color: #5e6670;
   --white-color: #ffff;
   --black-color: #0000;
+  --placeholder-color: #9199a3;
+  --link-color: #9199a3;
   --btn-radius: 4px;
   --fs-small: 16px;
-
+  --global-linear-gradient: linear-gradient(
+    to right,
+    #c599e547 0%,
+    #c599e500 51%,
+    #e2ccf2ab 100%
+  );
+  --footer-credits-color: #b781df;
   --ff-primary-reg: "Poppins-Regular";
   --ff-primary-med: "Poppins-Medium";
   --ff-primary-semiBold: "Poppins-SemiBold";
@@ -38,9 +47,9 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--heading-color);
+  color: var(--heading-color) !important;
   margin-bottom: 0px;
-  font-family: var(--ff-primary-reg);
+  font-family: var(--ff-primary-med);
   font-weight: 600;
 }
 
@@ -50,16 +59,25 @@ p {
   font-family: var(--ff-primary-reg);
   font-size: 16px;
 }
+a {
+  text-decoration: none;
+}
 body h1 {
   font-size: 42px;
   @media screen and (max-width: 991px) {
     font-size: 34px;
+  }
+  @media screen and (max-width: 576px) {
+    font-size: 30px;
   }
 }
 body h2 {
   font-size: 24px;
   @media screen and (max-width: 991px) {
     font-size: 32px;
+  }
+  @media screen and (max-width: 576px) {
+    font-size: 26px;
   }
 }
 @keyframes headerIn {

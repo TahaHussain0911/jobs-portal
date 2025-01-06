@@ -2,8 +2,9 @@ import React from "react";
 import classes from "./DesktopHeader.module.css";
 import { Container } from "react-bootstrap";
 import { Logo } from "../../../helper/imagePath";
-import Button from "../../Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Button from "../../../components/Button";
+import MainLogo from "../../../components/MainLogo";
 const DesktopHeader = ({ routes, buttonLinks }) => {
   const navigate = useNavigate();
   const LinkItem = ({ label, path }) => {
@@ -24,9 +25,8 @@ const DesktopHeader = ({ routes, buttonLinks }) => {
       <div className={classes.desktopHeader}>
         <Container>
           <div className={classes.header_wrapper}>
-            <div className={classes.imageLogo}>
-              <img src={Logo} />
-            </div>
+            <MainLogo />
+
             <div className={classes.menuItems}>
               {routes?.map((link, index) => (
                 <LinkItem key={index} path={link?.path} label={link?.name} />

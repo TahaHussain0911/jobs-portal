@@ -1,49 +1,9 @@
 import React, { useEffect, useState } from "react";
 import isScreenResizeHook from "../../customHooks/useScreenChange";
-import MobileHeader from "./MobileHeader";
+import { headerButtons, headerRoutes } from "../../helper/contants";
 import DesktopHeader from "./DesktopHeader";
-import { IoHomeOutline } from "react-icons/io5";
-import { MdInfoOutline, MdOutlineWorkOutline } from "react-icons/md";
-import { FaRegUser } from "react-icons/fa";
-import { CiLogin } from "react-icons/ci";
-import { RiContactsLine } from "react-icons/ri";
+import MobileHeader from "./MobileHeader";
 
-const routes = [
-  {
-    name: "Home",
-    path: "/",
-    icon: <IoHomeOutline />,
-  },
-  {
-    name: "About",
-    path: "/about",
-    icon: <MdInfoOutline />,
-  },
-  {
-    name: "Find Jobs",
-    path: "/jobs",
-    icon: <MdOutlineWorkOutline />,
-  },
-  {
-    name: "Employers",
-    path: "/employers",
-    icon: <FaRegUser />,
-  },
-];
-const buttonLinks = [
-  {
-    name: "Contact Us",
-    path: "/contact-us",
-    icon: <RiContactsLine />,
-    variant: "secondary",
-  },
-  {
-    name: "Login",
-    path: "/login",
-    icon: <CiLogin />,
-    variant: "primary",
-  },
-];
 const Header = ({ headerClassName }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -87,9 +47,9 @@ const Header = ({ headerClassName }) => {
         }`}
       >
         {isMobile ? (
-          <MobileHeader routes={routes} buttonLinks={buttonLinks} />
+          <MobileHeader routes={headerRoutes} buttonLinks={headerButtons} />
         ) : (
-          <DesktopHeader routes={routes} buttonLinks={buttonLinks} />
+          <DesktopHeader routes={headerRoutes} buttonLinks={headerButtons} />
         )}
       </header>
     </>
