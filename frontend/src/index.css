@@ -8,6 +8,7 @@
   --white-color: #ffff;
   --black-color: #0000;
   --placeholder-color: #9199a3;
+  --input-placeholder: #12122480;
   --link-color: #9199a3;
   --border-color: #efe2f8;
   --card-bg-color: #f8f2fc;
@@ -56,7 +57,8 @@ h6 {
   font-weight: 600;
 }
 
-p {
+p,
+span {
   color: var(--text-color);
   margin-bottom: 0px;
   font-family: var(--ff-primary-reg);

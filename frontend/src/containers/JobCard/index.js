@@ -22,9 +22,7 @@ const jobTypeStyles = (type) => {
   }
 };
 
-const JobCard = ({ job }) => {
-    console.log(job,'job');
-    
+const JobCard = ({ job }) => {    
   return (
     <div className={classes.jobCard}>
       <div className={classes.header}>

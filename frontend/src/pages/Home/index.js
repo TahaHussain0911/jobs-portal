@@ -23,6 +23,9 @@ const Home = () => {
               <JobCard job={job} key={index} />
             ))}
           </div>
+          <div className={classes.viewAllBtn}>
+            <span>View all</span>
+          </div>
         </Container>
       </div>
       <Footer />

@@ -1,0 +1,128 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-top: 20px;
+}
+
+.labelOnTop {
+  margin-top: 2rem;
+}
+
+.labelText {
+  color: var(--heading-color);
+  text-transform: capitalize;
+  font-family: var(--ff-primary-med);
+  font-size: var(--fs-small);
+  margin-bottom: 4px;
+}
+.labelContainer {
+  display: flex;
+  gap: 5px;
+}
+.onTopLabel {
+  position: absolute;
+  z-index: 1;
+  line-height: 1;
+  padding-inline: 8px;
+  top: -22px;
+  margin-inline-start: 1.5rem;
+  color: var(--primary-color);
+  inset-inline-start: -20px;
+}
+
+.inputBox {
+  font-family: var(--ff-primary-reg);
+  font-size: var(--fs-small);
+  border-radius: 8px;
+  background-color: inherit;
+  padding: 12px 20px;
+  width: 100%;
+  border: 1px solid var(--border-color);
+}
+
+.inputBox:focus-within {
+  border: 1px solid var(--border-color);
+  outline: none !important;
+}
+
+.inputBox:disabled {
+  cursor: not-allowed;
+}
+
+.noBorder {
+  border: none;
+}
+
+.inputPassContainer {
+  display: flex;
+  position: relative;
+  background-color: var(--white-color);
+  border-radius: 8px;
+}
+
+.inputPassContainer input::placeholder {
+  color: var(--input-placeholder);
+  font-family: var(--ff-primary-reg);
+  font-size: var(--fs-small);
+  text-transform: capitalize;
+}
+
+.inputPassContainer input:disabled {
+  background-color: var(--disabled-input-color);
+  color: #c9c9c9;
+  user-select: none;
+}
+
+.inputPassContainer .passwordIcon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  bottom: 50%;
+  transform: translateY(-50%);
+  color: #cacaca;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.errorText {
+  color: red;
+}
+
+.disabled {
+  color: var(--disabled-label-color);
+}
+
+.leftIconBox {
+  position: absolute;
+  inset-inline-start: 20px;
+  inset-block-start: 50%;
+  bottom: 45%;
+  transform: translateY(-50%);
+  height: max-content;
+}
+
+.rightIcon {
+  position: absolute;
+  inset-inline-end: 14px;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  height: max-content;
+}
+
+.inputBox::-webkit-outer-spin-button,
+.inputBox::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/*  Firefox  */
+.inputBox[type="number"] {
+  -moz-appearance: textfield;
+}
+
+@media (max-width: 578px) {
+  .labelText {
+    font-size: var(--fs-base);
+  }
+}

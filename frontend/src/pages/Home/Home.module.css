@@ -1,8 +1,8 @@
-.featuredContainer{
+.featuredContainer {
   padding-block: 60px 40px;
 }
 .featuredHeading {
-  :where(h1,p){
+  :where(h1, p) {
     text-align: center;
   }
 }
@@ -12,4 +12,17 @@
   column-gap: 20px;
   row-gap: 15px;
   margin-top: 30px;
+}
+
+.viewAllBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.viewAllBtn span {
+  cursor: pointer;
+  color: var(--main-color);
+  text-decoration: underline;
+  font-family: var(--ff-primary-semiBold);
 }
