@@ -5,7 +5,9 @@ import { Container } from "react-bootstrap";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { GoogleSmall, LoginImg } from "../../helper/imagePath";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
@@ -54,7 +56,8 @@ const Login = () => {
               </div>
               <div className={classes.noAccount}>
                 <p>
-                  Don’t have an account? <span>Register</span>
+                  Don’t have an account?{" "}
+                  <span onClick={() => navigate("/signup")}>Register</span>
                 </p>
               </div>
             </div>
