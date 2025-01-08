@@ -12,6 +12,12 @@
   column-gap: 20px;
   row-gap: 15px;
   margin-top: 30px;
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .viewAllBtn {
@@ -25,4 +31,50 @@
   color: var(--main-color);
   text-decoration: underline;
   font-family: var(--ff-primary-semiBold);
+}
+.companyContainer {
+  padding-block: 40px;
+  .companyHeader {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    span {
+      color: var(--text-color);
+      font-size: 22px;
+      z-index: 2;
+      background-color: var(--white-color);
+      padding: 4px 10px;
+    }
+    &::before {
+      content: "";
+      height: 1.5px;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #acb2b96e;
+      z-index: 1;
+    }
+  }
+  .companyLogos {
+    margin-top: 30px;
+    /* display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); */
+    gap: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    .imageLogo {
+      place-items: center;
+    }
+    @media screen and (max-width: 991px) {
+      justify-content: space-around;
+      column-gap: 30px;
+      row-gap: 10px;
+      flex-wrap: wrap;
+    }
+  }
 }

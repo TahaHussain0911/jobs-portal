@@ -7,6 +7,13 @@ import { Container } from "react-bootstrap";
 import JobCard from "../../containers/JobCard";
 import Button from "../../components/Button";
 import { jobsData } from "../../helper/dummyData";
+import {
+  FlipKartImg,
+  GoogleImg,
+  IBM,
+  MicrosoftImg,
+  YoutubeImg,
+} from "../../helper/imagePath";
 const Home = () => {
   return (
     <>
@@ -25,6 +32,30 @@ const Home = () => {
           </div>
           <div className={classes.viewAllBtn}>
             <span>View all</span>
+          </div>
+        </Container>
+      </div>
+      <div className={classes.companyContainer}>
+        <Container>
+          <div className={classes.companyHeader}>
+            <span>Top companies hiring now</span>
+          </div>
+          <div className={classes.companyLogos}>
+            <div className={classes.imageLogo}>
+              <img src={GoogleImg} />
+            </div>
+            <div className={classes.imageLogo}>
+              <img src={MicrosoftImg} />
+            </div>
+            <div className={classes.imageLogo}>
+              <img src={FlipKartImg} />
+            </div>
+            <div className={classes.imageLogo}>
+              <img src={YoutubeImg} />
+            </div>
+            <div className={classes.imageLogo}>
+              <img src={IBM} />
+            </div>
           </div>
         </Container>
       </div>

@@ -5,6 +5,10 @@ export { default as GoogleSmall } from "/assets/images/google-small.png";
 export { default as IntelSmall } from "/assets/images/intell-small.png";
 export { default as IBM } from "/assets/images/ibm.png";
 export { default as LoginImg } from "/assets/images/login-image.png";
+export { default as GoogleImg } from "/assets/images/google.png";
+export { default as MicrosoftImg } from "/assets/images/microsoft.png";
+export { default as FlipKartImg } from "/assets/images/flipkart.png";
+export { default as YoutubeImg } from "/assets/images/youtube.png";
 
 export { default as User1 } from "/assets/images/user-1.png";
 export { default as User2 } from "/assets/images/user-2.png";
