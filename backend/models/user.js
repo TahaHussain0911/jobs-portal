@@ -59,6 +59,7 @@ const UserSchema = mongoose.Schema(
       select: false,
     },
     role: {
+      type: String,
       enum: ["user", "admin"],
       default: "user",
       immutable: true,
@@ -124,4 +125,4 @@ UserSchema.methods.generateOtp = async function (next) {
   this.otpExpiresAt = new Date(Date.now() + otpExpiryMiliSecs);
 };
 
-mongoose.model("User", UserSchema);
+module.exports = mongoose.model("User", UserSchema);

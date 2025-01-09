@@ -15,8 +15,10 @@ UserRouter.post("/signup", signupUser).post("/login", loginUser);
 UserRouter.post("/send-otp", resetPassOtp)
   .post("/resend-otp")
   .post("/verify-otp", verifyResetPassOtp);
-
 UserRouter.patch("/reset-password", resetPassword);
+
+
+
 UserRouter.get("/me", getMe);
 UserRouter.patch("/update-user", updateUser);
 UserRouter.patch("/change-password", changePassword);

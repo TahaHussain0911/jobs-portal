@@ -36,6 +36,8 @@ const globalErrorHandler = (err, req, res) => {
       msg: err.message,
     });
   }
+  console.log(err);
+  
   return res.status(500).json({
     status: "error",
     message: "Something went wrong!",
