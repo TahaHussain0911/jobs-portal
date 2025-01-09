@@ -6,6 +6,8 @@ const { jwtSecretKey, jwtExpiresAt } = require("../utils/credentials");
 const { getTimeDifference, generateOtp } = require("../helper/helperFunctions");
 const AppError = require("../utils/appError");
 const { StatusCodes } = require("http-status-codes");
+const Email = require("../utils/email");
+const { otpExpiryMiliSecs } = require("../utils/contants");
 
 const UserSchema = mongoose.Schema(
   {
@@ -114,12 +116,12 @@ UserSchema.methods.generateOtp = async function (next) {
     );
   }
   const otp = generateOtp();
-  const payload={
-    msg:`Your confirmation code is ${otp}`
-  }
-  
+  const payload = {
+    msg: `Your confirmation code is ${otp}`,
+  };
+  await new Email(this).sendResetPassOtp(payload);
   this.otp = otp;
-  this.otpExpiresAt = new Date();
+  this.otpExpiresAt = new Date(Date.now() + otpExpiryMiliSecs);
 };
 
 mongoose.model("User", UserSchema);

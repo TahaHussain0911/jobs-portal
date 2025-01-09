@@ -1,4 +1,6 @@
 const nodemailer = require("nodemailer");
+const pug = require("pug");
+const htmlToText = require("html-to-text");
 const { mailEmail, mailPass } = require("./credentials");
 
 class Email {
@@ -17,7 +19,28 @@ class Email {
       },
     });
   }
-  async sendMailTemplate({ template, subject, payload }) {}
-  async sendOtp() {}
+  async sendMailTemplate({ template, subject, payload }) {
+    const html = pug.renderFile(`${__dirname}../views/${template}.pug`, {
+      payload,
+      subject:`Hello ${this.name}! ${payload?.msg}`,
+    });
+    // for those systems not supporting html
+    const text = htmlToText.convert(html);
+    const mail = {
+      from: this.from,
+      to: this.to,
+      subject,
+      html,
+      text,
+    };
+    return await this.createTransport().sendMail(mail);
+  }
+  async sendResetPassOtp(payload) {
+    await this.sendMailTemplate({
+      template: "userMessage",
+      payload,
+      subject: "Reset Password OTP Verification",
+    });
+  }
 }
 module.exports = Email;
