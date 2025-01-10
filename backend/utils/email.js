@@ -5,7 +5,7 @@ const { mailEmail, mailPass } = require("./credentials");
 
 class Email {
   constructor(user) {
-    this.to = user?.emai;
+    this.to = user?.email;
     this.name = user?.name;
     this.from = `Always Apply <${mailEmail}>`;
   }
@@ -20,7 +20,7 @@ class Email {
     });
   }
   async sendMailTemplate({ template, subject, payload }) {
-    const html = pug.renderFile(`${__dirname}../views/${template}.pug`, {
+    const html = pug.renderFile(`${__dirname}/../views/pug/${template}.pug`, {
       payload,
       subject:`Hello ${this.name}! ${payload?.msg}`,
     });

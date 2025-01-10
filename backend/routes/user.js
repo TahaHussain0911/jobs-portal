@@ -10,6 +10,7 @@ const {
   changePassword,
   resendResetPassOtp,
 } = require("../controllers/user");
+const upload = require("../middlewares/image-upload");
 const UserRouter = express.Router();
 
 UserRouter.post("/signup", signupUser).post("/login", loginUser);
@@ -19,7 +20,7 @@ UserRouter.post("/send-otp", resetPassOtp)
 UserRouter.patch("/reset-password", resetPassword);
 
 UserRouter.get("/me", getMe);
-UserRouter.patch("/update-user", updateUser);
+UserRouter.patch("/update-user", upload.single("photo"), updateUser);
 UserRouter.patch("/change-password", changePassword);
 
 module.exports = UserRouter;
