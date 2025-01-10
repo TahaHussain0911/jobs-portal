@@ -42,7 +42,7 @@ const loginUser = catchAsync(async (req, res, next) => {
       new AppError("Invalid email or password", StatusCodes.BAD_REQUEST)
     );
   }
-  const isPasswordCorrect = await User.comparePassword(password);
+  const isPasswordCorrect = await foundUser.comparePassword(password);
   if (!isPasswordCorrect) {
     return next(
       new AppError("Invalid email or password", StatusCodes.BAD_REQUEST)
@@ -132,7 +132,38 @@ const changePassword = catchAsync(async (req, res, next) => {
   });
 });
 
-const resetPassOtp = catchAsync(async (req, res, next) => {});
+const resetPassOtp = catchAsync(async (req, res, next) => {
+  const { email } = req.body;
+  const foundUser = await User.findOne({ email });
+  if (!foundUser) {
+    return next(new AppError("Invalid email!", StatusCodes.BAD_REQUEST));
+  }
+  await foundUser.generateOtp(next);
+  await foundUser.save();
+  res.status(StatusCodes.OK).json({
+    msg: "Otp code send to your email!",
+  });
+});
+const resendResetPassOtp = catchAsync(async (req, res, next) => {
+  const { email } = req.body;
+  const foundUser = await User.findOne({ email });
+  if (!foundUser) {
+    return next(new AppError("Invalid email!", StatusCodes.BAD_REQUEST));
+  }
+  if (!foundUser?.otpExpiresAt) {
+    return next(
+      new AppError(
+        "Request for otp first before resending code!",
+        StatusCodes.BAD_REQUEST
+      )
+    );
+  }
+  await foundUser.generateOtp(next);
+  await foundUser.save();
+  res.status(StatusCodes.OK).json({
+    msg: "Otp code send to your email!",
+  });
+});
 const verifyResetPassOtp = catchAsync(async (req, res, next) => {});
 const resetPassword = catchAsync(async (req, res, next) => {});
 
@@ -143,6 +174,7 @@ module.exports = {
   updateUser,
   changePassword,
   resetPassOtp,
+  resendResetPassOtp,
   verifyResetPassOtp,
   resetPassword,
 };
