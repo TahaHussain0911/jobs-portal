@@ -134,7 +134,7 @@ const changePassword = catchAsync(async (req, res, next) => {
 
 const resetPassOtp = catchAsync(async (req, res, next) => {
   const { email } = req.body;
-  const foundUser = await User.findOne({ email });
+  const foundUser = await User.findOne({ email }).select("+otp +otpExpiresAt");
   if (!foundUser) {
     return next(new AppError("Invalid email!", StatusCodes.BAD_REQUEST));
   }
@@ -146,7 +146,7 @@ const resetPassOtp = catchAsync(async (req, res, next) => {
 });
 const resendResetPassOtp = catchAsync(async (req, res, next) => {
   const { email } = req.body;
-  const foundUser = await User.findOne({ email });
+  const foundUser = await User.findOne({ email }).select("+otp +otpExpiresAt");
   if (!foundUser) {
     return next(new AppError("Invalid email!", StatusCodes.BAD_REQUEST));
   }
@@ -164,8 +164,88 @@ const resendResetPassOtp = catchAsync(async (req, res, next) => {
     msg: "Otp code send to your email!",
   });
 });
-const verifyResetPassOtp = catchAsync(async (req, res, next) => {});
-const resetPassword = catchAsync(async (req, res, next) => {});
+const verifyResetPassOtp = catchAsync(async (req, res, next) => {
+  const { email, otp } = req.body;
+  const foundUser = await User.findOne({ email }).select(
+    "+otp +otpExpiresAt +otpVerified"
+  );
+  if (!foundUser) {
+    return next(new AppError("Invalid email!", StatusCodes.BAD_REQUEST));
+  }
+  if (foundUser?.otpVerified) {
+    return next(
+      new AppError(
+        "You have already verified your OTP. You can reset your password now.",
+        StatusCodes.CONFLICT
+      )
+    );
+  }
+  if (!foundUser?.otp || !foundUser?.otpExpiresAt) {
+    return next(
+      new AppError("Request for otp first!", StatusCodes.BAD_REQUEST)
+    );
+  }
+  const otpExpiryInMs = new Date(foundUser?.otpExpiresAt).getTime();
+  if (otpExpiryInMs < Date.now()) {
+    return next(
+      new AppError(
+        "OTP code expired! Request for another.",
+        StatusCodes.BAD_REQUEST
+      )
+    );
+  }
+  if (foundUser?.otp !== otp) {
+    return next(
+      new AppError(
+        "OTP code invalid! Please try again!",
+        StatusCodes.BAD_REQUEST
+      )
+    );
+  }
+  foundUser.otp = undefined;
+  foundUser.otpExpiresAt = undefined;
+  foundUser.otpVerified = true;
+  await foundUser.save();
+  res.status(StatusCodes.OK).json({
+    msg: "OTP code verified!",
+  });
+});
+const resetPassword = catchAsync(async (req, res, next) => {
+  const { email, newPassword, confirmNewPassword } = req.body;
+  const foundUser = await User.findOne({ email }).select(
+    "+password +passwordChangedAt +otpVerified"
+  );
+  if (!foundUser) {
+    return next(new AppError("Invalid email!", StatusCodes.BAD_REQUEST));
+  }
+  if (!foundUser?.otpVerified) {
+    return next(
+      new AppError("Please verify otp first!", StatusCodes.BAD_REQUEST)
+    );
+  }
+  if (newPassword?.length < 8) {
+    return next(
+      new AppError(
+        "Password must be of atleast 8 characters!",
+        StatusCodes.BAD_REQUEST
+      )
+    );
+  }
+  if (newPassword !== confirmNewPassword) {
+    return next(
+      new AppError(
+        "Password and confirm password donot match!",
+        StatusCodes.CONFLICT
+      )
+    );
+  }
+  foundUser.otpVerified = false;
+  foundUser.password = newPassword;
+  await foundUser.save();
+  res.status(StatusCodes.OK).json({
+    msg: "Your password has been reset!",
+  });
+});
 
 module.exports = {
   signupUser,
