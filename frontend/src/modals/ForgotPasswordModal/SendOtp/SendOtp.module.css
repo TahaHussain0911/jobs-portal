@@ -1,0 +1,8 @@
+.inputField {
+  margin-bottom: 15px;
+}
+.actionBtns {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}

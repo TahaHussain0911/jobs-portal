@@ -6,10 +6,12 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { GoogleSmall, LoginImg } from "../../helper/imagePath";
 import { useNavigate } from "react-router-dom";
+import ForgotPasswordModal from "../../modals/ForgotPasswordModal";
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [forgotPassModal, setForgotPassModal] = useState(false);
   return (
     <>
       <Header />
@@ -39,7 +41,9 @@ const Login = () => {
                 />
               </div>
               <div className={classes.forgotPass}>
-                <span>Forgot Password?</span>
+                <span onClick={() => setForgotPassModal("send-otp")}>
+                  Forgot Password?
+                </span>
               </div>
               <div className={classes.submitBtn}>
                 <Button label={"Login"} />
@@ -67,6 +71,12 @@ const Login = () => {
           </div>
         </Container>
       </div>
+      {forgotPassModal && (
+        <ForgotPasswordModal
+          show={forgotPassModal}
+          setShow={setForgotPassModal}
+        />
+      )}
     </>
   );
 };
