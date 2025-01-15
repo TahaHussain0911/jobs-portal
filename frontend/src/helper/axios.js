@@ -68,10 +68,10 @@ const Post = async (route, payload, accessToken) => {
     showError(error);
   }
 };
-const Put = async (route, payload, accessToken) => {
+const Patch = async (route, payload, accessToken) => {
   const headers = apiHeader(accessToken);
   try {
-    const res = await axios.put(BaseURL(route), payload, headers);
+    const res = await axios.patch(BaseURL(route), payload, headers);
     return res;
   } catch (error) {
     showError(error);
@@ -87,4 +87,4 @@ const Delete = async (route, accessToken) => {
   }
 };
 
-export { apiUrl, BaseURL, apiHeader, Get, Post, Put, Delete };
+export { apiUrl, BaseURL, apiHeader, Get, Post, Patch, Delete };

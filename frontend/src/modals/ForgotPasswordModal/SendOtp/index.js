@@ -3,11 +3,28 @@ import ModalSkeleton from "../../../containers/ModalSkeleton";
 import classes from "./SendOtp.module.css";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
+import { Post } from "../../../helper/axios";
+import { toast } from "react-toastify";
+import { useResetPass } from "../../../context/ResetPassContext";
 const SendOtp = ({ show, setShow }) => {
+  const { setContextPayload } = useResetPass();
   const [email, setEmail] = useState("");
-  const handleSendOtp=async()=>{
-    // const response=await 
-  }
+  const [isLoading, setIsLoading] = useState(false);
+  const handleSendOtp = async () => {
+    setShow("verify-otp");
+    return;
+    const params = {
+      email,
+    };
+    setIsLoading(true);
+    const response = await Post("auth/send-otp", params);
+    if (response) {
+      toast.success("Otp send successfully!");
+      setContextPayload(params);
+      setShow("verify-otp");
+    }
+    setIsLoading(false);
+  };
   return (
     <>
       <ModalSkeleton
@@ -29,8 +46,12 @@ const SendOtp = ({ show, setShow }) => {
             />
           </div>
           <div className={classes.actionBtns}>
-            <Button label={"Cancel"} variant="secondary" />
-            <Button label={"Submit"} onClick={handleSendOtp} />
+            <Button label={"Cancel"} variant="secondary" disabled={isLoading} />
+            <Button
+              label={isLoading ? "Submitting..." : "Submit"}
+              disabled={isLoading}
+              onClick={handleSendOtp}
+            />
           </div>
         </div>
       </ModalSkeleton>
