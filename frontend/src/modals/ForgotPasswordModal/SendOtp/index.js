@@ -5,6 +5,9 @@ import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 const SendOtp = ({ show, setShow }) => {
   const [email, setEmail] = useState("");
+  const handleSendOtp=async()=>{
+    // const response=await 
+  }
   return (
     <>
       <ModalSkeleton
@@ -27,7 +30,7 @@ const SendOtp = ({ show, setShow }) => {
           </div>
           <div className={classes.actionBtns}>
             <Button label={"Cancel"} variant="secondary" />
-            <Button label={"Submit"} />
+            <Button label={"Submit"} onClick={handleSendOtp} />
           </div>
         </div>
       </ModalSkeleton>

@@ -1,0 +1,11 @@
+.OtpInput_style {
+  width: 100% !important;
+  height: 60px;
+  margin-left: 20px;
+  color: var(--black-color) !important;
+  border: 1px solid #bababa;
+  border-radius: 8px;
+  font-size: 24px;
+  font-weight: bold;
+  outline: none;
+}
