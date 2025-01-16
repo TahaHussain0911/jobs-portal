@@ -20,7 +20,6 @@ const Header = ({ headerClassName }) => {
       };
     }
   }, [typeof window !== "undefined" && window.innerWidth]);
-  console.log(isMobile);
 
   return (
     <>

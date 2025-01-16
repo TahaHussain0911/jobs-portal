@@ -7,6 +7,7 @@ const Button = ({
   variant = "primary",
   onClick,
   disabled,
+  type = "button",
   ...props
 }) => {
   return (
@@ -17,6 +18,7 @@ const Button = ({
         onClick={onClick}
         disabled={disabled}
         data-variant={variant}
+        type={type}
         {...props}
       >
         {label}

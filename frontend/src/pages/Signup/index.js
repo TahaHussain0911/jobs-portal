@@ -1,17 +1,35 @@
-import React, { useState } from "react";
+import { useFormik } from "formik";
+import React from "react";
 import { Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Header from "../../containers/Header";
 import { GoogleSmall } from "../../helper/imagePath";
+import { signupSchema } from "../../schemas/user";
 import classes from "./Signup.module.css";
-import { useNavigate } from "react-router-dom";
+import { Post } from "../../helper/axios";
+import { toast } from "react-toastify";
 const Signup = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const handleSignup = async (value, { setSubmitting }) => {
+    const response = await Post("auth/signup", values);
+    if (response) {
+      toast.success("Signup Successfull!");
+    }
+  };
+  const { values, errors, touched, handleChange, handleSubmit, isSubmitting } =
+    useFormik({
+      initialValues: {
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      },
+      // validationSchema: signupSchema,
+      onSubmit: handleSignup,
+    });
+
   return (
     <>
       <Header />
@@ -22,51 +40,61 @@ const Signup = () => {
             <p>Register to apply for jobs of your choice all over the world.</p>
           </div>
           <div className={classes.loginContainer}>
-            <div className={classes.inputField}>
-              <Input
-                label={"Full Name"}
-                placeholder={"Enter Full Name"}
-                value={name}
-                setter={setName}
-              />
-            </div>
-            <div className={classes.inputField}>
-              <Input
-                label={"Email ID"}
-                placeholder={"Enter email id"}
-                value={email}
-                setter={setEmail}
-              />
-            </div>
-            <div className={classes.inputField}>
-              <Input
-                label={"Email ID"}
-                placeholder={"Enter email id"}
-                value={email}
-                setter={setEmail}
-              />
-            </div>
-            <div className={classes.inputField}>
-              <Input
-                label={"Password"}
-                placeholder={"Enter Password"}
-                value={password}
-                setter={setPassword}
-                type={"password"}
-              />
-            </div>
-            <div className={classes.inputField}>
-              <Input
-                label={"Confirm Password"}
-                placeholder={"Enter Confirm Password"}
-                value={confirmPassword}
-                setter={setConfirmPassword}
-                type={"password"}
-              />
-            </div>
-            <div className={classes.submitBtn}>
-              <Button label={"Register Now"} />
-            </div>
+            <form onSubmit={handleSubmit}>
+              <div className={classes.inputField}>
+                <Input
+                  label={"Full Name"}
+                  placeholder={"Enter Full Name"}
+                  value={values.name}
+                  onChange={handleChange}
+                  name={"name"}
+                  error={errors.name && touched.name}
+                  errorText={errors.name}
+                />
+              </div>
+              <div className={classes.inputField}>
+                <Input
+                  label={"Email ID"}
+                  placeholder={"Enter email id"}
+                  value={values.email}
+                  onChange={handleChange}
+                  name={"email"}
+                  error={errors.email && touched.email}
+                  errorText={errors.email}
+                />
+              </div>
+              <div className={classes.inputField}>
+                <Input
+                  label={"Password"}
+                  placeholder={"Enter Password"}
+                  value={values.password}
+                  onChange={handleChange}
+                  name={"password"}
+                  type={"password"}
+                  error={errors.password && touched.password}
+                  errorText={errors.password}
+                />
+              </div>
+              <div className={classes.inputField}>
+                <Input
+                  label={"Confirm Password"}
+                  placeholder={"Enter Confirm Password"}
+                  value={values.confirmPassword}
+                  onChange={handleChange}
+                  name={"confirmPassword"}
+                  type={"password"}
+                  error={errors.confirmPassword && touched.confirmPassword}
+                  errorText={errors.confirmPassword}
+                />
+              </div>
+              <div className={classes.submitBtn}>
+                <Button
+                  label={isSubmitting ? "Wait..." : "Register Now"}
+                  type={"submit"}
+                  disabled={isSubmitting}
+                />
+              </div>
+            </form>
             <div className={classes.loginOptions}>
               <div className={classes.separator}>
                 <span>or signup with</span>

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 const apiUrl = "http://localhost:5000";
 const BaseURL = (url) => {
-  return `${apiUrl}/${url}`;
+  return `${apiUrl}/api/v1/${url}`;
 };
 
 const apiHeader = (accessToken) => {
@@ -24,8 +24,10 @@ const apiHeader = (accessToken) => {
 };
 
 const showError = (error) => {
+  console.log(error, "error");
+
   let errorMsg = "";
-  const errorRes = error?.response?.data?.message?.error;
+  const errorRes = error?.response?.data?.message;
   if (Array.isArray(errorRes)) {
     errorRes?.forEach((er, i) => {
       errorMsg += `${i + 1}: ${er} \n`;
@@ -35,11 +37,11 @@ const showError = (error) => {
   }
   if (error?.message === "Network Error") {
     toast.error(`${error?.message}: Please check your internet`, {
-      position: toast.POSITION.TOP_CENTER,
+      position: "top-center",
     });
   } else {
     toast.error(errorMsg, {
-      position: toast.POSITION.TOP_CENTER,
+      position: "top-center",
     });
   }
 };

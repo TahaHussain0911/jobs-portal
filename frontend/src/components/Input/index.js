@@ -10,6 +10,7 @@ const Input = ({
   type,
   label,
   label2,
+  name,
   value,
   setter,
   noBorder,
@@ -27,6 +28,8 @@ const Input = ({
   labelClassName,
   enterClick,
   labelOnTop = false,
+  onChange,
+  onBlur,
   ...props
 }) => {
   const [passToggle, setPassToggle] = useState(false);
@@ -71,6 +74,10 @@ const Input = ({
               }
             }}
             onChange={(e) => {
+              if(onChange){
+                onChange(e)
+                return;
+              }
               if (regexType == "number" || type == "number") {
                 setter(e?.target?.value?.replace(numberRegEx, ""));
               } else {
@@ -87,8 +94,9 @@ const Input = ({
             ].join(" ")}`}
             style={{ ...inputStyle, ...inputContainerStyleObject }}
             onBlur={() => {
-              setter(value?.trim());
+              setter && setter(value?.trim());
             }}
+            name={name}
             {...props}
           />
           {rightIcon && <div className={classes.rightIcon}>{rightIcon}</div>}
