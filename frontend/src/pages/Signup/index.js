@@ -26,7 +26,7 @@ const Signup = () => {
         password: "",
         confirmPassword: "",
       },
-      // validationSchema: signupSchema,
+      validationSchema: signupSchema,
       onSubmit: handleSignup,
     });
 
