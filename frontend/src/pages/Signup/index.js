@@ -10,12 +10,16 @@ import { signupSchema } from "../../schemas/user";
 import classes from "./Signup.module.css";
 import { Post } from "../../helper/axios";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { saveLoginData } from "../../store/auth/authSlice";
 const Signup = () => {
   const navigate = useNavigate();
-  const handleSignup = async (value, { setSubmitting }) => {
-    const response = await Post("auth/signup", values);
+  const dispatch = useDispatch();
+  const handleSignup = async (payload, { setSubmitting }) => {
+    const response = await Post("auth/signup", payload);
     if (response) {
       toast.success("Signup Successfull!");
+      dispatch(saveLoginData(response?.data));
     }
   };
   const { values, errors, touched, handleChange, handleSubmit, isSubmitting } =

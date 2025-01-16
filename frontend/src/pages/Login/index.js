@@ -7,10 +7,31 @@ import Button from "../../components/Button";
 import { GoogleSmall, LoginImg } from "../../helper/imagePath";
 import { useNavigate } from "react-router-dom";
 import ForgotPasswordModal from "../../modals/ForgotPasswordModal";
+import { useFormik } from "formik";
+import { Post } from "../../helper/axios";
+import { toast } from "react-toastify";
+import { loginSchema } from "../../schemas/user";
+import { useDispatch } from "react-redux";
+import { saveLoginData } from "../../store/auth/authSlice";
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const handleLogin = async (payload) => {
+    const response = await Post("auth/login", payload);
+    if (response) {
+      toast.success("Login successfully!");
+      dispatch(saveLoginData(response?.data));
+    }
+  };
+  const { values, errors, touched, handleChange, handleSubmit, isSubmitting } =
+    useFormik({
+      initialValues: {
+        email: "",
+        password: "",
+      },
+      validationSchema: loginSchema,
+      onSubmit: handleLogin,
+    });
   const [forgotPassModal, setForgotPassModal] = useState(false);
   return (
     <>
@@ -23,31 +44,43 @@ const Login = () => {
           </div>
           <div className={classes.loginContainer}>
             <div className={classes.loginForm}>
-              <div className={classes.inputField}>
-                <Input
-                  label={"Email ID"}
-                  placeholder={"Enter email id"}
-                  value={email}
-                  setter={setEmail}
-                />
-              </div>
-              <div className={classes.inputField}>
-                <Input
-                  label={"Password"}
-                  placeholder={"Enter Password"}
-                  value={password}
-                  setter={setPassword}
-                  type={"password"}
-                />
-              </div>
-              <div className={classes.forgotPass}>
-                <span onClick={() => setForgotPassModal("send-otp")}>
-                  Forgot Password?
-                </span>
-              </div>
-              <div className={classes.submitBtn}>
-                <Button label={"Login"} />
-              </div>
+              <form onSubmit={handleSubmit}>
+                <div className={classes.inputField}>
+                  <Input
+                    label={"Email ID"}
+                    placeholder={"Enter email id"}
+                    value={values.email}
+                    onChange={handleChange}
+                    name={"email"}
+                    error={errors.email && touched.email}
+                    errorText={errors.email}
+                  />
+                </div>
+                <div className={classes.inputField}>
+                  <Input
+                    label={"Password"}
+                    placeholder={"Enter Password"}
+                    value={values.password}
+                    onChange={handleChange}
+                    type={"password"}
+                    name={"password"}
+                    error={errors.password && touched.password}
+                    errorText={errors.password}
+                  />
+                </div>
+                <div className={classes.forgotPass}>
+                  <span onClick={() => setForgotPassModal("send-otp")}>
+                    Forgot Password?
+                  </span>
+                </div>
+                <div className={classes.submitBtn}>
+                  <Button
+                    label={isSubmitting ? "Wait..." : "Login"}
+                    type="submit"
+                    disabled={isSubmitting}
+                  />
+                </div>
+              </form>
               <div className={classes.loginOptions}>
                 <div className={classes.separator}>
                   <span>or login with</span>
