@@ -62,10 +62,10 @@ const VerifyOtp = ({ show, setShow }) => {
 
   return (
     <>
-      <ModalSkeleton show={show} setShow={setShow} heading={"Verify Otp"}>
+      <ModalSkeleton show={show} setShow={(e) => {}} heading={"Verify Otp"}>
         <div className={classes.verifyOtp}>
           <div className={classes.otpHeading}>
-            <p>Enter one time password sent to</p>
+            <p>Enter one time code sent to</p>
             <p>{contextPayload?.email || ""}</p>
           </div>
           <form onSubmit={handleSubmit}>

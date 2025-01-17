@@ -36,7 +36,7 @@ const SendOtp = ({ show, setShow }) => {
     <>
       <ModalSkeleton
         show={show}
-        setShow={setShow}
+        setShow={(e) => {}}
         heading={"Forgot Password?"}
         width={"700px"}
       >
@@ -61,6 +61,7 @@ const SendOtp = ({ show, setShow }) => {
                 label={"Cancel"}
                 variant="secondary"
                 disabled={isSubmitting}
+                onClick={() => setShow(false)}
               />
               <Button
                 label={isSubmitting ? "Submitting..." : "Submit"}

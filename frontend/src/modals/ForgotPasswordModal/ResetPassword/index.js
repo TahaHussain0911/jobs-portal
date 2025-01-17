@@ -6,74 +6,70 @@ import Button from "../../../components/Button";
 import { toast } from "react-toastify";
 import { Patch } from "../../../helper/axios";
 import { useResetPass } from "../../../context/ResetPassContext";
-const ResetPassword = ({ show, setShow, email }) => {
+import { useFormik } from "formik";
+import { resetPasswordSchema } from "../../../schemas/user";
+const ResetPassword = ({ show, setShow }) => {
   const { contextPayload } = useResetPass();
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleResetPassword = async () => {
-    const params = {
-      email: contextPayload?.email,
-      newPassword,
-      confirmNewPassword,
-    };
-    for (let key in params) {
-      if (
-        ["newPassword", "confirmNewPassword"].includes(key) &&
-        params[key]?.length < 8
-      ) {
-        return toast.error(`Password should be atleast 8 characters long!`);
-      }
-    }
-    if (newPassword !== confirmNewPassword) {
-      return toast.error("Password and confirm password donot match");
-    }
-    setShow(false);
-    return;
-    setIsLoading(true);
-    const response = await Patch("auth/reset-password", params);
+  const handleResetPassword = async (values) => {
+    const response = await Patch("auth/reset-password", values);
     if (response) {
       toast.success("Password reset successfully!");
       setShow(false);
     }
-    setIsLoading(false);
   };
-  
+  const { values, errors, touched, handleSubmit, handleChange, isSubmitting } =
+    useFormik({
+      initialValues: {
+        newPassword: "",
+        confirmNewPassword: "",
+        email: contextPayload?.email,
+      },
+      validationSchema: resetPasswordSchema,
+      onSubmit: handleResetPassword,
+    });
+
   return (
     <>
       <ModalSkeleton
         show={show}
-        setShow={setShow}
+        setShow={(e) => {}}
         heading={"Reset Password"}
         width={"700px"}
       >
         <div className={classes.resetPassword}>
-          <div className={classes.inputField}>
-            <Input
-              value={newPassword}
-              setter={setNewPassword}
-              type={"password"}
-              label={"Password"}
-              placeholder={"Enter Password"}
-            />
-          </div>
-          <div className={classes.inputField}>
-            <Input
-              value={confirmNewPassword}
-              setter={setConfirmNewPassword}
-              type={"password"}
-              label={"Confirm Password"}
-              placeholder={"Enter Password"}
-            />
-          </div>
-          <div className={classes.actionBtns}>
-            <Button
-              label={isLoading ? "Updating..." : "Update"}
-              disabled={isLoading}
-              onClick={handleResetPassword}
-            />
-          </div>
+          <form onSubmit={handleSubmit}>
+            <div className={classes.inputField}>
+              <Input
+                value={values?.newPassword}
+                onChange={handleChange}
+                name={"newPassword"}
+                type={"password"}
+                label={"Password"}
+                placeholder={"Enter Password"}
+                error={errors?.newPassword && touched?.newPassword}
+              />
+            </div>
+            <div className={classes.inputField}>
+              <Input
+                value={values?.confirmNewPassword}
+                onChange={handleChange}
+                name={"confirmNewPassword"}
+                type={"password"}
+                label={"Confirm Password"}
+                placeholder={"Enter Password"}
+                error={
+                  errors?.confirmNewPassword && touched?.confirmNewPassword
+                }
+              />
+            </div>
+            <div className={classes.actionBtns}>
+              <Button
+                label={isSubmitting ? "Updating..." : "Update"}
+                disabled={isSubmitting}
+                type="submit"
+              />
+            </div>
+          </form>
         </div>
       </ModalSkeleton>
     </>
