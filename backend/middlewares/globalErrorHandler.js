@@ -13,7 +13,7 @@ const handleValidateError = (err) => {
   console.log(Object.values(err), "validate err");
 
   const errors = Object.values(err.errors).map((er) => er.message);
-  const message = `Invalid data: ${errors.join(". ")}`;
+  const message = `${errors.join(". ")}`;
   return new AppError(message, StatusCodes.BAD_REQUEST);
 };
 const handleJWTInvalid = () => {
