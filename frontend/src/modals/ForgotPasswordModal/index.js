@@ -5,6 +5,7 @@ import SendOtp from "./SendOtp";
 import VerifyOtp from "./VerifyOtp";
 
 const ForgotPasswordModal = ({ show, setShow }) => {
+  
   const renderModal = () => {
     switch (show) {
       case "send-otp":

@@ -16,3 +16,17 @@
   justify-content: center;
   margin-top: 15px;
 }
+.expiry {
+  margin-top: 10px;
+  & p {
+    font-size: 16px;
+    margin-bottom: 0px !important;
+    text-align: center;
+    & span {
+      font-weight: bold;
+    }
+  }
+  .otpExpired span{
+    cursor: pointer;
+  }
+}

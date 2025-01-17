@@ -9,3 +9,10 @@
   font-weight: bold;
   outline: none;
 }
+.errorBorder {
+  border: 1px solid red;
+}
+.errorText {
+  text-align: center;
+  color: red;
+}

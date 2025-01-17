@@ -6,25 +6,32 @@ import Button from "../../../components/Button";
 import { Post } from "../../../helper/axios";
 import { toast } from "react-toastify";
 import { useResetPass } from "../../../context/ResetPassContext";
+import { useFormik } from "formik";
+import * as yup from "yup";
 const SendOtp = ({ show, setShow }) => {
   const { setContextPayload } = useResetPass();
-  const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const handleSendOtp = async () => {
-    setShow("verify-otp");
-    return;
-    const params = {
-      email,
-    };
-    setIsLoading(true);
-    const response = await Post("auth/send-otp", params);
+  const handleSendOtp = async (values) => {
+    const response = await Post("auth/send-otp", values);
     if (response) {
       toast.success("Otp send successfully!");
-      setContextPayload(params);
+      setContextPayload(values);
       setShow("verify-otp");
     }
-    setIsLoading(false);
   };
+  const { values, handleChange, handleSubmit, isSubmitting, errors, touched } =
+    useFormik({
+      initialValues: {
+        email: "",
+      },
+      validationSchema: yup.object().shape({
+        email: yup
+          .string()
+          .required("Email is required!")
+          .email("Invalid Email!"),
+      }),
+      onSubmit: handleSendOtp,
+    });
+
   return (
     <>
       <ModalSkeleton
@@ -37,22 +44,31 @@ const SendOtp = ({ show, setShow }) => {
           <div className={classes.heading}>
             <p>Please enter your login email to receive a verification code.</p>
           </div>
-          <div className={classes.inputField}>
-            <Input
-              value={email}
-              setter={setEmail}
-              placeholder={"Enter Email"}
-              label={"Email"}
-            />
-          </div>
-          <div className={classes.actionBtns}>
-            <Button label={"Cancel"} variant="secondary" disabled={isLoading} />
-            <Button
-              label={isLoading ? "Submitting..." : "Submit"}
-              disabled={isLoading}
-              onClick={handleSendOtp}
-            />
-          </div>
+          <form onSubmit={handleSubmit}>
+            <div className={classes.inputField}>
+              <Input
+                value={values?.email}
+                onChange={handleChange}
+                placeholder={"Enter Email"}
+                label={"Email"}
+                name={"email"}
+                error={errors?.email && touched?.email}
+                errorText={errors?.email}
+              />
+            </div>
+            <div className={classes.actionBtns}>
+              <Button
+                label={"Cancel"}
+                variant="secondary"
+                disabled={isSubmitting}
+              />
+              <Button
+                label={isSubmitting ? "Submitting..." : "Submit"}
+                disabled={isSubmitting}
+                type={"submit"}
+              />
+            </div>
+          </form>
         </div>
       </ModalSkeleton>
     </>

@@ -39,6 +39,7 @@ const ResetPassword = ({ show, setShow, email }) => {
     }
     setIsLoading(false);
   };
+  
   return (
     <>
       <ModalSkeleton
