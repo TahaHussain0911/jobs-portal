@@ -1,11 +1,17 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import Button from "./components/Button";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
+import BeforeLoginRoute from "./guards/BeforeLoginRoute";
+import Loader from "./components/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { Get } from "./helper/axios";
+import { saveUserData } from "./store/auth/authSlice";
+
+const Home = lazy(() => import("./pages/Home"));
+const Login = lazy(() => import("./pages/Login"));
+const Signup = lazy(() => import("./pages/Signup"));
 
 const router = createBrowserRouter([
   {
@@ -14,19 +20,40 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <BeforeLoginRoute component={<Login />} />,
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: <BeforeLoginRoute component={<Signup />} />,
   },
 ]);
 
 function App() {
+  const dispatch = useDispatch();
+  const { isLogin, accessToken } = useSelector((state) => state.authReducer);
+  const [isLoading, setIsLoading] = useState(false);
+  const getUser = async () => {
+    setIsLoading(true);
+    const response = await Get("auth/me", accessToken);
+    if (response) {
+      dispatch(saveUserData(response?.data?.user));
+    }
+    setIsLoading(false);
+  };
+  useEffect(() => {
+    if (isLogin) {
+      getUser();
+    }
+  }, [isLogin]);
+  if (isLoading) {
+    return <Loader className="vh-100" />;
+  }
   return (
     <>
       <ToastContainer />
-      <RouterProvider router={router}></RouterProvider>
+      <Suspense fallback={<Loader className="vh-100" />}>
+        <RouterProvider router={router}></RouterProvider>
+      </Suspense>
     </>
   );
 }

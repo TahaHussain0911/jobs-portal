@@ -1,0 +1,16 @@
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 400px;
+}
+.loaderWrapper {
+  display: flex;
+  gap: 5px;
+}
+.growDot {
+  height: 50px;
+  width: 50px;
+  color: var(--main-color);
+}

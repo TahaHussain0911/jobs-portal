@@ -5,7 +5,9 @@ import { Logo } from "../../../helper/imagePath";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import MainLogo from "../../../components/MainLogo";
+import { useSelector } from "react-redux";
 const DesktopHeader = ({ routes, buttonLinks }) => {
+  const { isLogin } = useSelector((state) => state.authReducer);
   const navigate = useNavigate();
   const LinkItem = ({ label, path }) => {
     const active = useLocation()?.pathname === path;
@@ -33,16 +35,21 @@ const DesktopHeader = ({ routes, buttonLinks }) => {
               ))}
             </div>
             <div className={classes.authBtns}>
-              {buttonLinks?.map((btn, index) => (
-                <Button
-                  key={index}
-                  label={btn?.name}
-                  variant={btn?.variant}
-                  onClick={() => {
-                    navigate(btn?.path);
-                  }}
-                />
-              ))}
+              {buttonLinks?.flatMap((btn, index) => {
+                if (btn?.path === "/login" && isLogin) {
+                  return [];
+                }
+                return (
+                  <Button
+                    key={index}
+                    label={btn?.name}
+                    variant={btn?.variant}
+                    onClick={() => {
+                      navigate(btn?.path);
+                    }}
+                  />
+                );
+              })}
             </div>
           </div>
         </Container>

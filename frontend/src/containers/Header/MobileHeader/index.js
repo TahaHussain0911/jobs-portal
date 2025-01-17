@@ -5,13 +5,19 @@ import { Logo } from "../../../helper/imagePath";
 import { Drawer } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useDispatch, useSelector } from "react-redux";
+import { CiLogout } from "react-icons/ci";
+import { logoutUser } from "../../../store/auth/authSlice";
 const MobileHeader = ({ routes, buttonLinks }) => {
+  const { isLogin } = useSelector((state) => state.authReducer);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleDrawer = () => {
     setMenuOpen(!menuOpen);
   };
   const handleLogout = () => {
+    dispatch(logoutUser());
     navigate("/");
   };
   const MenuItem = ({ path, icon, label, customClass }) => {
@@ -72,14 +78,26 @@ const MobileHeader = ({ routes, buttonLinks }) => {
                 ))}
               </div>
               <div className={classes.bottomLinks}>
-                {buttonLinks?.map((route, index) => (
+                {buttonLinks?.flatMap((route, index) => {
+                  if (route?.path === "/login" && isLogin) {
+                    return [];
+                  }
+                  return (
+                    <MenuItem
+                      path={route?.path}
+                      label={route?.name}
+                      key={index}
+                      icon={route?.icon}
+                    />
+                  );
+                })}
+                {isLogin && (
                   <MenuItem
-                    path={route?.path}
-                    label={route?.name}
-                    key={index}
-                    icon={route?.icon}
+                    path={"logout"}
+                    label={"Logout"}
+                    icon={<CiLogout />}
                   />
-                ))}
+                )}
               </div>
             </div>
           </Drawer>
