@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const Jobs = require("../models/jobs");
 const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 
 const getJobs = catchAsync(async (req, res, next) => {
   const {
@@ -51,8 +52,28 @@ const getJobs = catchAsync(async (req, res, next) => {
     totalCount: jobs.length,
   });
 });
-const getSingleJob = catchAsync((req, res, next) => {});
-const createJob = catchAsync((req, res, next) => {});
+const getSingleJob = catchAsync(async (req, res, next) => {
+  const { slug } = req.params;
+  const job = await Jobs.findOne({ slug }).lean();
+  if (!job) {
+    return next(new AppError("Job doesnot exist!", StatusCodes.NOT_FOUND));
+  }
+  res.status(StatusCodes.OK).json({
+    data: job,
+  });
+});
+const createJob = catchAsync(async (req, res, next) => {
+  const { userId } = req.user;
+  const payload = {
+    user: userId,
+    ...req.body,
+  };
+  const job = await Jobs.create(payload);
+  res.status(StatusCodes.CREATED).json({
+    data: job,
+    msg: "Job created successfully",
+  });
+});
 const updateJob = catchAsync((req, res, next) => {});
 const deleteJob = catchAsync((req, res, next) => {});
 

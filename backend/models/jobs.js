@@ -1,10 +1,9 @@
 const { default: mongoose } = require("mongoose");
 const {
-  jobVacancyTypes,
-  jobLevelTypes,
   workModeTypes,
   jobTypes,
   experienceLevel,
+  jobRoles,
 } = require("../utils/enums");
 const { generateSlug } = require("../utils/helper");
 
@@ -14,10 +13,11 @@ const JobSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    // jobRole: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref:"JobRole"
-    // },
+    jobRole: {
+      type: String,
+      enum: jobRoles,
+      required: [true, "Job Role is required!"],
+    },
     title: {
       type: String,
       required: [true, "Title is required"],
@@ -61,7 +61,7 @@ const JobSchema = mongoose.Schema(
     },
     city: {
       type: String,
-      required: [true, "Country is required!"],
+      required: [true, "City is required!"],
     },
   },
   {
