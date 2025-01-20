@@ -172,14 +172,6 @@ const verifyResetPassOtp = catchAsync(async (req, res, next) => {
   if (!foundUser) {
     return next(new AppError("Invalid email!", StatusCodes.BAD_REQUEST));
   }
-  if (foundUser?.otpVerified) {
-    return next(
-      new AppError(
-        "You have already verified your OTP. You can reset your password now.",
-        StatusCodes.CONFLICT
-      )
-    );
-  }
   if (!foundUser?.otp || !foundUser?.otpExpiresAt) {
     return next(
       new AppError("Request for otp first!", StatusCodes.BAD_REQUEST)

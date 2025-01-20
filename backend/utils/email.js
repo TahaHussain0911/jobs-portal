@@ -22,7 +22,7 @@ class Email {
   async sendMailTemplate({ template, subject, payload }) {
     const html = pug.renderFile(`${__dirname}/../views/pug/${template}.pug`, {
       payload,
-      subject:`Hello ${this.name}! ${payload?.msg}`,
+      subject:`Hello ${this.name}!`,
     });
     // for those systems not supporting html
     const text = htmlToText.convert(html);
