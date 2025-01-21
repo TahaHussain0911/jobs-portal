@@ -12,6 +12,8 @@ import { saveUserData } from "./store/auth/authSlice";
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
+const Jobs = lazy(() => import("./pages/Jobs"));
+const AddEditJob = lazy(() => import("./pages/AddEditJob"));
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <BeforeLoginRoute component={<Signup />} />,
+  },
+  {
+    path: "/jobs",
+    element: <BeforeLoginRoute component={<Jobs />} />,
+  },
+  {
+    path: "/add-edit-job",
+    element: <BeforeLoginRoute component={<AddEditJob />} />,
   },
 ]);
 
