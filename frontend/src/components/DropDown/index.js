@@ -7,23 +7,26 @@ const DropDown = ({
   value,
   setter,
   placeholder,
+  placeholderColor = "var(--placeholder-color)",
   label,
   isMulti,
   optionLabel,
   optionValue,
   disabled,
   Components,
-  customeClassName = "DropdownOptionContainer",
+  customClassName = "DropdownOptionContainer",
   isSearchable = false,
   labelClassName,
   singleValueColor = "var(--black-color)",
-  indicatorColor = "var(--main-color)",
+  indicatorColor = "var(--heading-color)",
   customHoverColor,
   customActiveColor,
   styles,
   containerStyle,
   customStyle,
   optionContainerRadius = "12px",
+  error,
+  errorText,
 }) => {
   const DropdownIndicator = (props) => {
     return (
@@ -61,24 +64,23 @@ const DropDown = ({
       letterSpacing: "1.4",
       cursor: "pointer",
       border: "none",
-      borderRadius: "100px",
+      borderRadius: "8px",
       textTransform: "capitialize",
       border: isFocused
-        ? "1px solid var(--main-color)"
-        : "1px solid var(--main-color)",
+        ? "1px solid var(--border-color)"
+        : "1px solid var(--border-color)",
       ...customStyle,
 
       ":hover": {
         ...styles[":hover"],
-        borderColor: customHoverColor || "var(--main-color)",
+        borderColor: "var(--border-color)",
       },
       ":placeholder": {
         ...styles[":placeholder"],
-        color: "var(--text-color)",
+        color: "var(--placeholder-color)",
       },
       ":active": {
         ...styles[":active"],
-        borderColor: customActiveColor || "var(--main-color)",
       },
     }),
 
@@ -93,8 +95,8 @@ const DropDown = ({
     option: (styles, { data, isDisabled, isFocused, isSelected }) => {
       return {
         ...styles,
-        backgroundColor: isSelected && "var(--secondary-color)",
-        color: isSelected && "var(--theme-white-color)",
+        backgroundColor: isSelected && "var(--main-color)",
+        color: isSelected && "var(--white-color)",
         padding: "8px 12px",
         fontFamily: "var(--ff-secondary-reg)",
         textTransform: "capitialize",
@@ -105,8 +107,8 @@ const DropDown = ({
         },
         ":hover": {
           ...styles[":hover"],
-          color: "var(--theme-white-color)",
-          backgroundColor: "var(--dropdown-hover)",
+          color: "var(--white-color)",
+          backgroundColor: "#6300b38f",
           cursor: "pointer",
         },
       };
@@ -147,8 +149,8 @@ const DropDown = ({
           border-radius:${optionContainerRadius};
           z-index: 1100 !important;
           box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
-          background-color: var(--login-div-color);
-          color: var(--main-color);
+          background-color: var(--white-color);
+          color: var(--heading-color);
           top:calc( 100% + 4px );
         }   
         .DropdownOptionContainer__control {
@@ -214,6 +216,9 @@ const DropDown = ({
             ...Components,
           }}
         />
+        {error && (
+          <p className={`mt-2 ${[classes.errorText].join(" ")}`}>{errorText}</p>
+        )}
       </div>
     </div>
   );

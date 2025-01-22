@@ -1,0 +1,64 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  color: var(--heading-color);
+  text-transform: capitalize;
+  font-family: var(--ff-primary-med);
+  font-size: var(--fs-small);
+  margin-bottom: 4px;
+}
+
+.disabled {
+  color: #ababab;
+}
+
+/* On Hover */
+.dropdown:hover {
+  border: 1px solid black !important;
+}
+
+/* on Focus */
+.dropdown:focus {
+  border: 1px solid black;
+}
+
+/* On Active */
+.dropdown:active {
+  border: 1px solid black;
+}
+
+/* On Disabled */
+.dropdown:disabled {
+  background-color: #f6f6f6;
+  color: #b5b5b5;
+  border: 1px solid #e5e5e5;
+}
+
+.noBorder {
+  border: 0px solid #e5e5e5;
+}
+
+.arrow {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+.leftIconBox {
+  position: absolute;
+  inset-inline-start: 12px;
+  inset-block-start: 50%;
+  inset-block-end: 45%;
+  transform: translateY(-50%);
+  height: max-content;
+}
+
+.dropdownContainer {
+  position: relative;
+}
+.errorText {
+  color: red;
+}

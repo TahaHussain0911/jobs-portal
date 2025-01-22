@@ -8,6 +8,7 @@ import Loader from "./components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { Get } from "./helper/axios";
 import { saveUserData } from "./store/auth/authSlice";
+import ProtectedRoute from "./guards/ProtectedRoute";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -30,11 +31,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/jobs",
-    element: <BeforeLoginRoute component={<Jobs />} />,
+    element: <ProtectedRoute component={<Jobs />} />,
   },
   {
     path: "/add-edit-job",
-    element: <BeforeLoginRoute component={<AddEditJob />} />,
+    element: <ProtectedRoute component={<AddEditJob />} />,
   },
 ]);
 
@@ -52,7 +53,7 @@ function App() {
   };
   useEffect(() => {
     if (isLogin) {
-      getUser();
+      // getUser();
     }
   }, [isLogin]);
   if (isLoading) {
