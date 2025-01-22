@@ -2,7 +2,6 @@
   padding-block: 120px 50px;
 }
 .header {
-  margin-left: 20px;
   margin-bottom: 20px;
   @media screen and (max-width: 567px) {
     margin-left: 0px;

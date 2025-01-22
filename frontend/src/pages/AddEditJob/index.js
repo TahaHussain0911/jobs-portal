@@ -6,7 +6,7 @@ import { Container } from "react-bootstrap";
 import Input from "../../components/Input";
 import { useFormik } from "formik";
 import DropDown from "../../components/DropDown";
-import { jobRoles } from "../../helper/options";
+import { experienceLevel, jobRoles, jobTypes, workModeTypes } from "../../helper/options";
 import { mergeClass } from "../../helper/mergeClass";
 import TagsInput from "../../components/TagsInput";
 import { jobSchema } from "../../schemas/job";
@@ -78,6 +78,45 @@ const AddEditJob = () => {
                 options={jobRoles}
                 errorText={errors.jobRole}
                 error={errors.jobRole && touched.jobRole}
+              />
+            </div>
+            <div className={classes.inputField}>
+              <DropDown
+                label={"Experience Level"}
+                placeholder={"Select Experience Level"}
+                value={values.experience}
+                setter={(e) => {
+                  setFieldValue("experience", e);
+                }}
+                options={experienceLevel}
+                errorText={errors.experience}
+                error={errors.experience && touched.experience}
+              />
+            </div>
+            <div className={classes.inputField}>
+              <DropDown
+                label={"Job Type"}
+                placeholder={"Select Job Type"}
+                value={values.jobType}
+                setter={(e) => {
+                  setFieldValue("jobType", e);
+                }}
+                options={jobTypes}
+                errorText={errors.jobType}
+                error={errors.jobType && touched.jobType}
+              />
+            </div>
+            <div className={classes.inputField}>
+              <DropDown
+                label={"Work Mode"}
+                placeholder={"Select Work Mode"}
+                value={values.workMode}
+                setter={(e) => {
+                  setFieldValue("workMode", e);
+                }}
+                options={workModeTypes}
+                errorText={errors.workMode}
+                error={errors.workMode && touched.workMode}
               />
             </div>
           </form>
