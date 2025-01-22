@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { numberRegEx } from "../../helper/regex";
 import classes from "./input.module.css";
+import ErrorText from "../ErrorText";
 
 /**
  * Primary UI component for user interaction
@@ -74,8 +75,8 @@ const Input = ({
               }
             }}
             onChange={(e) => {
-              if(onChange){
-                onChange(e)
+              if (onChange) {
+                onChange(e);
                 return;
               }
               if (regexType == "number" || type == "number") {
@@ -114,11 +115,9 @@ const Input = ({
             />
           )}
         </div>
-        {error && (
-          <p className={`mt-2 ${[classes.errorText].join(" ")}`}>{errorText}</p>
-        )}
+        {error && <ErrorText text={errorText} />}
       </div>
     </>
   );
 };
-export default Input
+export default Input;

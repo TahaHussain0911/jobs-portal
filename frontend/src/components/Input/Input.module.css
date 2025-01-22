@@ -36,7 +36,7 @@
   font-size: var(--fs-small);
   border-radius: 8px;
   background-color: inherit;
-  padding: 12px 20px;
+  padding: 12px ;
   width: 100%;
   border: 1px solid var(--border-color);
 }

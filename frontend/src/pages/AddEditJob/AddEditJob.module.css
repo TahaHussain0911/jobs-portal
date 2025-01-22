@@ -1,28 +1,36 @@
-.addEditJob{
-    padding-block: 120px 50px;
+.addEditJob {
+  padding-block: 120px 50px;
 }
 .header {
-    margin-left: 20px;
-    margin-bottom: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  @media screen and (max-width: 567px) {
+    margin-left: 0px;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: var(--ff-primary-semiBold);
+    margin-bottom: 4px !important;
+    font-size: 38px;
     @media screen and (max-width: 567px) {
-      margin-left: 0px;
-      margin-bottom: 10px;
-    }
-    h1 {
-      font-family: var(--ff-primary-semiBold);
-      margin-bottom: 4px !important;
-      font-size: 38px;
-      @media screen and (max-width: 567px) {
-        font-size: 30px;
-        text-align: center;
-      }
-    }
-    p {
-      margin-bottom: 0px !important;
-      font-size: 18px;
-      @media screen and (max-width: 567px) {
-        font-size: 16px;
-        text-align: center;
-      }
+      font-size: 30px;
+      text-align: center;
     }
   }
+  p {
+    margin-bottom: 0px !important;
+    font-size: 18px;
+    @media screen and (max-width: 567px) {
+      font-size: 16px;
+      text-align: center;
+    }
+  }
+}
+.jobForm {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  .fullWidth {
+    grid-column: 1 / -1;
+  }
+}

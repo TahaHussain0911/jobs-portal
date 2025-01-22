@@ -2,6 +2,8 @@ import React from "react";
 import classes from "./DropDown.module.css";
 import Select, { components } from "react-select";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import ErrorText from "../ErrorText";
+import { mergeClass } from "../../helper/mergeClass";
 const DropDown = ({
   options,
   value,
@@ -66,7 +68,9 @@ const DropDown = ({
       border: "none",
       borderRadius: "8px",
       textTransform: "capitialize",
-      border: isFocused
+      border: error
+        ? "1px solid red"
+        : isFocused
         ? "1px solid var(--border-color)"
         : "1px solid var(--border-color)",
       ...customStyle,
@@ -88,6 +92,9 @@ const DropDown = ({
       return {
         ...defaultStyles,
         color: placeholderColor,
+        fontFamily: "var(--ff-primary-reg)",
+        fontSize: "16px",
+        textTransform: "capitalize",
         // ...(leftIcon && {marginLeft:"22px"})
       };
     },
@@ -203,7 +210,7 @@ const DropDown = ({
           isClearable={false}
           options={options}
           styles={{ ...dropDownStyle, ...styles }}
-          classNamePrefix={customClassName}
+          classNamePrefix={mergeClass(customClassName,error)}
           isSearchable={isSearchable}
           getOptionLabel={(option) => {
             return optionLabel ? option[optionLabel] : option.label;
@@ -216,9 +223,7 @@ const DropDown = ({
             ...Components,
           }}
         />
-        {error && (
-          <p className={`mt-2 ${[classes.errorText].join(" ")}`}>{errorText}</p>
-        )}
+        {error && <ErrorText text={errorText} />}
       </div>
     </div>
   );
