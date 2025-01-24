@@ -41,4 +41,16 @@ const workModeTypes = [
   { label: "Remote", value: "remote" },
   { label: "Hybrid", value: "hybrid" },
 ];
-export { jobTypes, experienceLevel, jobRoles, workModeTypes };
+const currencyOptions = [
+  {
+    label: "PKR",
+    value: "pkr",
+    symbol: "PKR",
+  },
+  {
+    label: "US-Dollar ($)",
+    value: "us-dollar",
+    symbol: "$",
+  },
+];
+export { jobTypes, experienceLevel, jobRoles, workModeTypes, currencyOptions };

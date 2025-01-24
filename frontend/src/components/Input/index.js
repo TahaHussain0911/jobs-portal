@@ -42,10 +42,7 @@ const Input = ({
   return (
     <>
       <div
-        className={`${[
-          classes.Container,
-          labelOnTop ? classes.labelOnTop : "",
-        ].join(" ")}`}
+        className={`${[labelOnTop ? classes.labelOnTop : ""].join(" ")}`}
         style={{ ...parentCustomStyle }}
       >
         {label && (

@@ -6,7 +6,13 @@ import { Container } from "react-bootstrap";
 import Input from "../../components/Input";
 import { useFormik } from "formik";
 import DropDown from "../../components/DropDown";
-import { experienceLevel, jobRoles, jobTypes, workModeTypes } from "../../helper/options";
+import {
+  currencyOptions,
+  experienceLevel,
+  jobRoles,
+  jobTypes,
+  workModeTypes,
+} from "../../helper/options";
 import { mergeClass } from "../../helper/mergeClass";
 import TagsInput from "../../components/TagsInput";
 import { jobSchema } from "../../schemas/job";
@@ -28,6 +34,7 @@ const AddEditJob = () => {
         description: "",
         country: "",
         city: "",
+        currency: currencyOptions?.[0],
       },
       validationSchema: jobSchema,
       onSubmit: handleAddEditJob,
@@ -67,57 +74,88 @@ const AddEditJob = () => {
                 error={errors.tags && touched.tags}
               />
             </div>
-            <div className={classes.inputField}>
-              <DropDown
-                label={"Job Role"}
-                placeholder={"Select Job Role"}
-                value={values.jobRole}
-                setter={(e) => {
-                  setFieldValue("jobRole", e);
-                }}
-                options={jobRoles}
-                errorText={errors.jobRole}
-                error={errors.jobRole && touched.jobRole}
-              />
-            </div>
-            <div className={classes.inputField}>
-              <DropDown
-                label={"Experience Level"}
-                placeholder={"Select Experience Level"}
-                value={values.experience}
-                setter={(e) => {
-                  setFieldValue("experience", e);
-                }}
-                options={experienceLevel}
-                errorText={errors.experience}
-                error={errors.experience && touched.experience}
-              />
-            </div>
-            <div className={classes.inputField}>
-              <DropDown
-                label={"Job Type"}
-                placeholder={"Select Job Type"}
-                value={values.jobType}
-                setter={(e) => {
-                  setFieldValue("jobType", e);
-                }}
-                options={jobTypes}
-                errorText={errors.jobType}
-                error={errors.jobType && touched.jobType}
-              />
-            </div>
-            <div className={classes.inputField}>
-              <DropDown
-                label={"Work Mode"}
-                placeholder={"Select Work Mode"}
-                value={values.workMode}
-                setter={(e) => {
-                  setFieldValue("workMode", e);
-                }}
-                options={workModeTypes}
-                errorText={errors.workMode}
-                error={errors.workMode && touched.workMode}
-              />
+            <DropDown
+              label={"Job Role"}
+              placeholder={"Select Job Role"}
+              value={values.jobRole}
+              setter={(e) => {
+                setFieldValue("jobRole", e);
+              }}
+              options={jobRoles}
+              errorText={errors.jobRole}
+              error={errors.jobRole && touched.jobRole}
+            />
+            <DropDown
+              label={"Experience Level"}
+              placeholder={"Select Experience Level"}
+              value={values.experience}
+              setter={(e) => {
+                setFieldValue("experience", e);
+              }}
+              options={experienceLevel}
+              errorText={errors.experience}
+              error={errors.experience && touched.experience}
+            />
+            <DropDown
+              label={"Job Type"}
+              placeholder={"Select Job Type"}
+              value={values.jobType}
+              setter={(e) => {
+                setFieldValue("jobType", e);
+              }}
+              options={jobTypes}
+              errorText={errors.jobType}
+              error={errors.jobType && touched.jobType}
+            />
+            <DropDown
+              label={"Work Mode"}
+              placeholder={"Select Work Mode"}
+              value={values.workMode}
+              setter={(e) => {
+                setFieldValue("workMode", e);
+              }}
+              options={workModeTypes}
+              errorText={errors.workMode}
+              error={errors.workMode && touched.workMode}
+            />
+            <DropDown
+              label={"Currency"}
+              placeholder={"Select Currency"}
+              value={values.currency}
+              setter={(e) => {
+                setFieldValue("currency", e);
+              }}
+              options={currencyOptions}
+              errorText={errors.currency}
+              error={errors.currency && touched.currency}
+            />
+            <Input
+              label={"Min Salary"}
+              placeholder={"Add Min Salary"}
+              value={values?.salary?.min}
+              setter={(e) => {
+                setFieldValue("salary.min", e);
+              }}
+              regexType={'number'}
+              errorText={errors?.salary?.min}
+              error={errors?.salary?.min && touched?.salary?.min}
+            />
+            <Input
+              label={"Max Salary"}
+              placeholder={"Add Max Salary"}
+              value={values?.salary?.max}
+              setter={(e) => {
+                setFieldValue("salary.max", e);
+              }}
+              regexType={'number'}
+              errorText={errors?.salary?.max}
+              error={errors?.salary?.max && touched?.salary?.max}
+            />
+            <div className={classes.locationContainer}>
+              <h4>Location</h4>
+              <div className={classes.locationWrapper}>
+                
+              </div>
             </div>
           </form>
         </Container>

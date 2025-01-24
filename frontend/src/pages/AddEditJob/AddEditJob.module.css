@@ -33,3 +33,16 @@
     grid-column: 1 / -1;
   }
 }
+.locationContainer {
+  grid-column: 1 / -1;
+  margin-top: 20px;
+  & h4 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .locationWrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
