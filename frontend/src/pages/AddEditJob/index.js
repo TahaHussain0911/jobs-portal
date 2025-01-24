@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./AddEditJob.module.css";
 import Header from "../../containers/Header";
 import Footer from "../../containers/Footer";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import Input from "../../components/Input";
 import { useFormik } from "formik";
 import DropDown from "../../components/DropDown";
@@ -16,6 +16,7 @@ import {
 import { mergeClass } from "../../helper/mergeClass";
 import TagsInput from "../../components/TagsInput";
 import { jobSchema } from "../../schemas/job";
+import CountryStateCity from "../../containers/CountryStateCity";
 const AddEditJob = () => {
   const handleAddEditJob = async (values) => {};
   const { values, errors, touched, setFieldValue, handleSubmit, isSubmitting } =
@@ -33,6 +34,7 @@ const AddEditJob = () => {
         workMode: null,
         description: "",
         country: "",
+        state: "",
         city: "",
         currency: currencyOptions?.[0],
       },
@@ -136,7 +138,7 @@ const AddEditJob = () => {
               setter={(e) => {
                 setFieldValue("salary.min", e);
               }}
-              regexType={'number'}
+              regexType={"number"}
               errorText={errors?.salary?.min}
               error={errors?.salary?.min && touched?.salary?.min}
             />
@@ -147,15 +149,23 @@ const AddEditJob = () => {
               setter={(e) => {
                 setFieldValue("salary.max", e);
               }}
-              regexType={'number'}
+              regexType={"number"}
               errorText={errors?.salary?.max}
               error={errors?.salary?.max && touched?.salary?.max}
             />
             <div className={classes.locationContainer}>
               <h4>Location</h4>
               <div className={classes.locationWrapper}>
-                
+                <CountryStateCity
+                  selectedCountry={values.country}
+                  setSelectedCountry={(e) => setFieldValue("country", e)}
+                  selectedCity={values.city}
+                  setSelectedCity={(e) => setFieldValue("city", e)}
+                  selectedState={values.state}
+                  setSelectedState={(e) => setFieldValue("state", e)}
+                />
               </div>
+              {/* </div> */}
             </div>
           </form>
         </Container>
