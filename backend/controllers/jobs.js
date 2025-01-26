@@ -74,8 +74,38 @@ const createJob = catchAsync(async (req, res, next) => {
     msg: "Job created successfully",
   });
 });
-const updateJob = catchAsync((req, res, next) => {});
-const deleteJob = catchAsync((req, res, next) => {});
+const updateJob = catchAsync(async (req, res, next) => {
+  const { userId } = req.user;
+  const { jobId, ...updatedBody } = req.body;
+  const job = await Jobs.findOne({
+    _id: jobId,
+    user: userId,
+  });
+  if (!job) {
+    return next(new AppError("Job doesnot exist!", StatusCodes.NOT_FOUND));
+  }
+  const updatedJob = await Jobs.findOneAndUpdate({ _id: jobId }, req.body, {
+    new: true,
+  });
+  res.status(StatusCodes.OK).json({
+    data: updatedJob,
+    message: "Job updated successfully!",
+  });
+});
+const deleteJob = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const { userId } = req.user;
+  const job = await Jobs.findOneAndDelete({
+    _id: id,
+    user: userId,
+  });
+  if (!job) {
+    return next(new AppError("Job doesnot exist!", StatusCodes.NOT_FOUND));
+  }
+  res.status(StatusCodes.OK).json({
+    message: "Jpb deleted successfully",
+  });
+});
 
 module.exports = {
   getJobs,

@@ -75,4 +75,13 @@ JobSchema.pre("validate", function (next) {
   next();
 });
 
+jobSchema.pre(["findOneAndUpdate", "findByIdAndUpdate"], async function (next) {
+  const update = this.getUpdate();
+
+  if (update.title) {
+    update.slug = slugify(update.title, { lower: true, strict: true });
+  }
+  next();
+});
+
 module.exports = mongoose.model("Jobs", JobSchema);
