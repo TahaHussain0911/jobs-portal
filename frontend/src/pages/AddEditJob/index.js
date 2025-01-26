@@ -18,11 +18,31 @@ import TagsInput from "../../components/TagsInput";
 import { jobSchema } from "../../schemas/job";
 import CountryStateCity from "../../containers/CountryStateCity";
 import QuillInput from "../../components/QuillInput";
+import { useLocation, useNavigate } from "react-router-dom";
+import { apiHeader, BaseURL, Patch, Post } from "../../helper/axios";
+import { useSelector } from "react-redux";
+import { CreateFormData } from "../../helper/helperFunction";
+import { toast } from "react-toastify";
 const AddEditJob = () => {
-  const handleAddEditJob = async (values) => {};
+  const navigate = useNavigate();
+  const { access_token } = useSelector((state) => state.authReducer);
+  const { jobId } = useLocation().state || { jobId: "" };
+  const handleAddEditJob = async (values) => {
+    const formData = CreateFormData(values);
+    const response = jobId
+      ? await Patch("jobs", formData, apiHeader(access_token))
+      : Post("jobs", formData, apiHeader(access_token));
+    if (response) {
+      toast.success(`Job ${jobId ? "updated" : "created"} successfully!`);
+      navigate("/jobs");
+    }
+  };
   const { values, errors, touched, setFieldValue, handleSubmit, isSubmitting } =
     useFormik({
       initialValues: {
+        ...(jobId ? { jobId } : {}),
+        companyName: "",
+        companyLogo: null,
         title: "",
         tags: [],
         salary: {
@@ -53,6 +73,18 @@ const AddEditJob = () => {
             <p>Find the best talent for your company</p>
           </div>
           <form className={classes.jobForm} onSubmit={handleSubmit}>
+            <div className={mergeClass(classes.inputField, classes.fullWidth)}>
+              <Input
+                label={"Company Name"}
+                placeholder={"Enter Company Name"}
+                value={values.companyName}
+                setter={(e) => {
+                  setFieldValue("companyName", e);
+                }}
+                errorText={errors.companyName}
+                error={errors.companyName && touched.companyName}
+              />
+            </div>
             <div className={mergeClass(classes.inputField, classes.fullWidth)}>
               <Input
                 label={"Job Title"}
