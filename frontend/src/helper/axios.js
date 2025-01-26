@@ -5,7 +5,9 @@ const apiUrl = "http://localhost:5000";
 const BaseURL = (url) => {
   return `${apiUrl}/api/v1/${url}`;
 };
-
+const imageUrl = (url) => {
+  return `${apiUrl}/uploads/${url}`;
+};
 const apiHeader = (accessToken) => {
   if (accessToken) {
     return {
@@ -89,4 +91,4 @@ const Delete = async (route, accessToken) => {
   }
 };
 
-export { apiUrl, BaseURL, apiHeader, Get, Post, Patch, Delete };
+export { apiUrl, BaseURL, imageUrl, apiHeader, Get, Post, Patch, Delete };

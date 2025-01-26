@@ -73,7 +73,7 @@ const AddEditJob = () => {
             <p>Find the best talent for your company</p>
           </div>
           <form className={classes.jobForm} onSubmit={handleSubmit}>
-            <div className={mergeClass(classes.inputField, classes.fullWidth)}>
+            <div className={classes.fullWidth}>
               <Input
                 label={"Company Name"}
                 placeholder={"Enter Company Name"}
@@ -85,7 +85,10 @@ const AddEditJob = () => {
                 error={errors.companyName && touched.companyName}
               />
             </div>
-            <div className={mergeClass(classes.inputField, classes.fullWidth)}>
+            <div className={classes.fullWidth}>
+              
+            </div>
+            <div className={classes.fullWidth}>
               <Input
                 label={"Job Title"}
                 placeholder={"Add job title"}
