@@ -1,0 +1,16 @@
+.quilDiv p {
+  color: var(--heading-color);
+  text-transform: capitalize;
+  font-family: var(--ff-primary-med);
+  font-size: var(--fs-small);
+  margin-bottom: 4px;
+}
+.quillInput {
+  border: 1px solid var(--border-color);
+  font-size: var(--fs-small);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.quillInput input::placeholder{
+    font-style: normal !important;
+}

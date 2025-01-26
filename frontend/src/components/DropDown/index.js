@@ -29,6 +29,7 @@ const DropDown = ({
   optionContainerRadius = "12px",
   error,
   errorText,
+  ...props
 }) => {
   const DropdownIndicator = (props) => {
     return (
@@ -210,7 +211,7 @@ const DropDown = ({
           isClearable={false}
           options={options}
           styles={{ ...dropDownStyle, ...styles }}
-          classNamePrefix={mergeClass(customClassName,error)}
+          classNamePrefix={mergeClass(customClassName, error)}
           isSearchable={isSearchable}
           getOptionLabel={(option) => {
             return optionLabel ? option[optionLabel] : option.label;
@@ -222,6 +223,7 @@ const DropDown = ({
             DropdownIndicator: (e) => DropdownIndicator(e),
             ...Components,
           }}
+          {...props}
         />
         {error && <ErrorText text={errorText} />}
       </div>

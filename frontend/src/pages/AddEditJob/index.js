@@ -17,6 +17,7 @@ import { mergeClass } from "../../helper/mergeClass";
 import TagsInput from "../../components/TagsInput";
 import { jobSchema } from "../../schemas/job";
 import CountryStateCity from "../../containers/CountryStateCity";
+import QuillInput from "../../components/QuillInput";
 const AddEditJob = () => {
   const handleAddEditJob = async (values) => {};
   const { values, errors, touched, setFieldValue, handleSubmit, isSubmitting } =
@@ -165,7 +166,14 @@ const AddEditJob = () => {
                   setSelectedState={(e) => setFieldValue("state", e)}
                 />
               </div>
-              {/* </div> */}
+            </div>
+            <div className={mergeClass(classes.description, classes.fullWidth)}>
+              <QuillInput
+                label={"Description"}
+                value={values.description}
+                setValue={(e) => setFieldValue("description", e)}
+                placeholder={"Enter Description"}
+              />
             </div>
           </form>
         </Container>

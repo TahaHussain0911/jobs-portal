@@ -1,4 +1,3 @@
-
 .labelOnTop {
   margin-top: 2rem;
 }
@@ -30,7 +29,7 @@
   font-size: var(--fs-small);
   border-radius: 8px;
   background-color: inherit;
-  padding: 12px ;
+  padding: 12px;
   width: 100%;
   border: 1px solid var(--border-color);
 }

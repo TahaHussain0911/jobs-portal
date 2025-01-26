@@ -35,7 +35,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/add-edit-job",
-    element: <ProtectedRoute component={<AddEditJob />} />,
+    // element: <ProtectedRoute component={<AddEditJob />} />,
+    element: <AddEditJob />,
   },
 ]);
 

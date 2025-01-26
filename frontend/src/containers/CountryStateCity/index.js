@@ -54,14 +54,6 @@ const CountryStateCity = ({
   };
   return (
     <>
-      <style>{`
-            .DropdownOptionContainer__indicator {
-              padding:5px;
-            }
-            .drop-select .DropdownOptionContainer__single-value{
-              color: var(--text-color-black);
-            }
-            `}</style>
       {setSelectedCountry && (
         <div className={"drop-select"}>
           <DropDown
