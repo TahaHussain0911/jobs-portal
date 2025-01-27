@@ -66,6 +66,7 @@ const createJob = catchAsync(async (req, res, next) => {
   const { userId } = req.user;
   const payload = {
     user: userId,
+    ...(req.file.filename && { companyLogo: req.file.filename }),
     ...req.body,
   };
   const job = await Jobs.create(payload);
@@ -76,7 +77,7 @@ const createJob = catchAsync(async (req, res, next) => {
 });
 const updateJob = catchAsync(async (req, res, next) => {
   const { userId } = req.user;
-  const { jobId, ...updatedBody } = req.body;
+  const { jobId } = req.body;
   const job = await Jobs.findOne({
     _id: jobId,
     user: userId,
@@ -84,9 +85,17 @@ const updateJob = catchAsync(async (req, res, next) => {
   if (!job) {
     return next(new AppError("Job doesnot exist!", StatusCodes.NOT_FOUND));
   }
-  const updatedJob = await Jobs.findOneAndUpdate({ _id: jobId }, req.body, {
-    new: true,
-  });
+  const updatedJob = await Jobs.findOneAndUpdate(
+    { _id: jobId },
+    {
+      ...req.body,
+      ...(req.file.filename && { companyLogo: req.file.filename }),
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
   res.status(StatusCodes.OK).json({
     data: updatedJob,
     message: "Job updated successfully!",

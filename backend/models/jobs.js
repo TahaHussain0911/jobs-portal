@@ -9,6 +9,15 @@ const { generateSlug } = require("../utils/helper");
 
 const JobSchema = mongoose.Schema(
   {
+    companyName: {
+      type: String,
+      required: [true, "Company Name is required!"],
+      minLength: 3,
+    },
+    companyLogo: {
+      type: String,
+      required: [true, "Company Logo is required!"],
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -75,7 +84,7 @@ JobSchema.pre("validate", function (next) {
   next();
 });
 
-jobSchema.pre(["findOneAndUpdate", "findByIdAndUpdate"], async function (next) {
+JobSchema.pre(["findOneAndUpdate", "findByIdAndUpdate"], async function (next) {
   const update = this.getUpdate();
 
   if (update.title) {
