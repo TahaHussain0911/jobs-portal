@@ -8,21 +8,16 @@ const BaseURL = (url) => {
 const imageUrl = (url) => {
   return `${apiUrl}/uploads/${url}`;
 };
-const apiHeader = (accessToken) => {
+const apiHeader = (accessToken, isFormData = false) => {
+  const headers = {
+    "Content-Type": isFormData ? "multipart/form-data" : "application/json",
+  };
+
   if (accessToken) {
-    return {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
-  } else {
-    return {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    headers.Authorization = `Bearer ${accessToken}`;
   }
+
+  return { headers };
 };
 
 const showError = (error) => {

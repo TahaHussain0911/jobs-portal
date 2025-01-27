@@ -2,11 +2,12 @@
   user-select: none;
 }
 
-.box label {
-  font-size: 18px;
-  margin-top: 20px;
-  color: var(--label-color);
-  font-family: "poppins-regular";
+.box .labelText {
+  color: var(--heading-color);
+  text-transform: capitalize;
+  font-family: var(--ff-primary-med);
+  font-size: var(--fs-small);
+  margin-bottom: 4px;
 }
 
 .csvBox {
@@ -14,15 +15,13 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 125px;
+  height: 150px;
   border-radius: 10px;
-  box-shadow: 0px 0 5px 2px #0000000d;
   position: relative;
   flex-direction: column;
   position: relative;
-  background-color: transparent !important;
   border: 1px solid var(--border-color);
-  border-radius: 0px !important;
+  border-radius: 8px;
 }
 
 .csvBox .viewBtnBox {

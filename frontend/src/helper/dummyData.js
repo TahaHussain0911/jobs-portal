@@ -1,4 +1,11 @@
-import { AppleSmall, GoogleSmall, IntelSmall, User1, User2, User3 } from "./imagePath";
+import {
+  AppleSmall,
+  GoogleSmall,
+  IntelSmall,
+  User1,
+  User2,
+  User3,
+} from "./imagePath";
 
 export const jobsData = [
   {
@@ -80,3 +87,32 @@ export const jobsData = [
     ],
   },
 ];
+export const payloadDummy = {
+  companyName: "ABC Company",
+  companyLogo: {
+    name: "css.jpg",
+    lastModified: "1733127596292",
+    webkitRelativePath: "",
+    size: "5629",
+    type: "image/jpeg",
+    arrayBuffer: "function arrayBuffer() { [native code] }",
+    slice: "function slice() { [native code] }",
+    stream: "function stream() { [native code] }",
+    text: "function text() { [native code] }",
+  },
+  title: "Frontend Developer",
+  tags: [null, "css", "javascript"],
+  salary: {
+    min: "40000",
+    max: "60000",
+  },
+  description: "<p>description</p>",
+  experience: "junior",
+  jobType: "full-time",
+  jobRole: "software-engineer",
+  workMode: "remote",
+  currency: "pkr",
+  country: "Afghanistan",
+  city: "Fayzabad",
+  state: "Badakhshan",
+};

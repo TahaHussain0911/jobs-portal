@@ -46,3 +46,7 @@
     gap: 15px;
   }
 }
+.actionBtns {
+  display: flex;
+  gap: 10px;
+}

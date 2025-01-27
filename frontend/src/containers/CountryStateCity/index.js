@@ -29,6 +29,9 @@ const CountryStateCity = ({
   inputStyle,
   customStyle,
   allowedCountries,
+  countryError,
+  stateError,
+  cityError,
 }) => {
   const countryOptions = allowedCountries || Country.getAllCountries();
   const getStatesOfCountry = (country) => {
@@ -37,7 +40,7 @@ const CountryStateCity = ({
         countryOptions?.find((item) => item?.name == country)?.isoCode
       );
     } else {
-      return State?.getStatesOfCountry(country?.name);
+      return State?.getStatesOfCountry(country?.isoCode);
     }
   };
   const getCitiesOfState = (state, country) => {
@@ -52,6 +55,8 @@ const CountryStateCity = ({
       return City.getCitiesOfState(state?.countryCode, state?.isoCode);
     }
   };
+  console.log(countryError,'countryError');
+  
   return (
     <>
       {setSelectedCountry && (
@@ -85,6 +90,8 @@ const CountryStateCity = ({
             label={allLabels?.[0]?.label}
             placeholder={allLabels?.[0]?.placeholder}
             isSearchable={true}
+            error={countryError}
+            errorText={countryError}
           />
         </div>
       )}
@@ -107,6 +114,8 @@ const CountryStateCity = ({
               parentCustomStyle={{
                 marginTop: "0px",
               }}
+              error={stateError}
+              errorText={stateError}
             />
           ) : (
             <DropDown
@@ -137,6 +146,8 @@ const CountryStateCity = ({
               }}
               labelClassName={labelClassName}
               isSearchable={true}
+              error={stateError}
+              errorText={stateError}
             />
           )}
         </div>
@@ -159,6 +170,8 @@ const CountryStateCity = ({
                 ...customStyle,
               }}
               labelClassName={labelClassName}
+              error={cityError}
+              errorText={cityError}
             />
           ) : (
             <DropDown
@@ -195,6 +208,8 @@ const CountryStateCity = ({
               }}
               isSearchable={true}
               labelClassName={labelClassName}
+              error={cityError}
+              errorText={cityError}
             />
           )}
         </div>

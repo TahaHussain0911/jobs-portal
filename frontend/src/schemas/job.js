@@ -26,7 +26,47 @@ export const jobSchema = yup.object().shape({
   workMode: yup.object().required("Work mode is required!"),
   currency: yup.object().required("Currency is required!"),
   salary: yup.object().shape({
-    min: yup.number().required("Min Salary is required!"),
+    min: yup
+      .number()
+      .required("Min Salary is required!")
+      .test(
+        "min-less-than-max",
+        "Min Salary should not be greater than Max Salary",
+        function (value) {
+          const { max } = this.parent;
+          return value <= max;
+        }
+      ),
     max: yup.number().required("Max Salary is required!"),
   }),
+  country: yup
+    .mixed()
+    .required("Country is required!")
+    .test(
+      "country-validation",
+      "Country cannot be empty",
+      (value) =>
+        typeof value === "string" ||
+        (typeof value === "object" && !Array.isArray(value))
+    ),
+  state: yup
+    .mixed()
+    .required("State is required!")
+    .test(
+      "state-validation",
+      "State cannot be empty",
+      (value) =>
+        typeof value === "string" ||
+        (typeof value === "object" && !Array.isArray(value))
+    ),
+  city: yup
+    .mixed()
+    .required("City is required!")
+    .test(
+      "city-validation",
+      "City cannot be empty",
+      (value) =>
+        typeof value === "string" ||
+        (typeof value === "object" && !Array.isArray(value))
+    ),
 });

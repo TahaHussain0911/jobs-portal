@@ -44,6 +44,7 @@ function AttachmentUpload({
   onEdit,
   onDelete,
   acceptedTypes = "*",
+  label,
 }) {
   const inputRef = useRef(null);
   const HandleUploadFile = (e) => {
@@ -63,6 +64,7 @@ function AttachmentUpload({
   };
   return (
     <div className={classes.box}>
+      {label && <p className={classes.labelText}>{label}</p>}
       {state?.name || typeof state == "string" ? (
         <div className={classes.csvBox}>
           <RenderMediaComponent state={state} />

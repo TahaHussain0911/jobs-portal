@@ -45,5 +45,7 @@ const CreateFormData = (payload) => {
   }
   return formData;
 };
-
-export { renderCurrency, numberWithCommas, CreateFormData };
+const findFromOptions = (options, value) => {
+  return options?.find((option) => option?.value === value);
+};
+export { renderCurrency, numberWithCommas, CreateFormData, findFromOptions };

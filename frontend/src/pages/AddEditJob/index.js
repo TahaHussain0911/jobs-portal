@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./AddEditJob.module.css";
 import Header from "../../containers/Header";
 import Footer from "../../containers/Footer";
@@ -19,49 +19,120 @@ import { jobSchema } from "../../schemas/job";
 import CountryStateCity from "../../containers/CountryStateCity";
 import QuillInput from "../../components/QuillInput";
 import { useLocation, useNavigate } from "react-router-dom";
-import { apiHeader, BaseURL, Patch, Post } from "../../helper/axios";
+import { apiHeader, BaseURL, Get, Patch, Post } from "../../helper/axios";
 import { useSelector } from "react-redux";
 import { CreateFormData } from "../../helper/helperFunction";
 import { toast } from "react-toastify";
+import AttachmentUpload from "../../components/AttachmentUpload";
+import Button from "../../components/Button";
+import { payloadDummy } from "../../helper/dummyData";
 const AddEditJob = () => {
   const navigate = useNavigate();
   const { access_token } = useSelector((state) => state.authReducer);
   const { jobId } = useLocation().state || { jobId: "" };
   const handleAddEditJob = async (values) => {
-    const formData = CreateFormData(values);
+    const {
+      experience,
+      jobType,
+      jobRole,
+      workMode,
+      currency,
+      country,
+      state,
+      city,
+      ...restValues
+    } = values;
+    const params = {
+      ...restValues,
+      experience: experience?.value,
+      jobType: jobType?.value,
+      jobRole: jobRole?.value,
+      workMode: workMode?.value,
+      currency: currency?.value,
+      country: country?.name || country,
+      city: city?.name || city,
+      state: state?.name || state,
+    };
+    const formData = CreateFormData(params);
+    console.log(formData);
+
     const response = jobId
-      ? await Patch("jobs", formData, apiHeader(access_token))
-      : Post("jobs", formData, apiHeader(access_token));
+      ? await Patch("jobs", formData, apiHeader(access_token, true))
+      : await Post("jobs", formData, apiHeader(access_token, true));
     if (response) {
       toast.success(`Job ${jobId ? "updated" : "created"} successfully!`);
       navigate("/jobs");
     }
   };
-  const { values, errors, touched, setFieldValue, handleSubmit, isSubmitting } =
-    useFormik({
-      initialValues: {
-        ...(jobId ? { jobId } : {}),
-        companyName: "",
-        companyLogo: null,
-        title: "",
-        tags: [],
-        salary: {
-          min: "",
-          max: "",
-        },
-        experience: null,
-        jobType: null,
-        jobRole: null,
-        workMode: null,
-        description: "",
-        country: "",
-        state: "",
-        city: "",
-        currency: currencyOptions?.[0],
+  const {
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    handleSubmit,
+    isSubmitting,
+    setValues,
+  } = useFormik({
+    initialValues: {
+      ...(jobId ? { jobId: "" } : {}),
+      companyName: "",
+      companyLogo: null,
+      title: "",
+      tags: [],
+      salary: {
+        min: "",
+        max: "",
       },
-      validationSchema: jobSchema,
-      onSubmit: handleAddEditJob,
-    });
+      experience: null,
+      jobType: null,
+      jobRole: null,
+      workMode: null,
+      description: "",
+      country: "",
+      state: "",
+      city: "",
+      currency: currencyOptions?.[0],
+    },
+    validationSchema: jobSchema,
+    onSubmit: handleAddEditJob,
+  });
+  const getJob = async () => {
+    const response = {
+      data: payloadDummy,
+    };
+    
+    // const response = await Get(`jobs/${jobId}`, access_token);
+    if (response) {
+      const { data } = response;
+      console.log(data);
+      const formattedData = {
+        // jobId: data._id,
+        companyName: data.companyName || "",
+        companyLogo: data.companyLogo || null,
+        title: data.title || "",
+        tags: data.tags || [],
+        salary: {
+          min: data.salary?.min || "",
+          max: data.salary?.max || "",
+        },
+        experience: findOption(experienceLevel, data.experience),
+        jobType: findOption(jobTypes, data.jobType),
+        jobRole: findOption(jobRoles, data.jobRole),
+        workMode: findOption(workModeTypes, data.workMode),
+        description: data.description || "",
+        country: data.country,
+        state: data.state,
+        city: data.city,
+        currency: findOption(currencyOptions, data.currency),
+      };
+      setValues(formattedData);
+    }
+  };
+  useEffect(() => {
+    getJob();
+    if (jobId) {
+    }
+  }, [jobId]);
 
   return (
     <>
@@ -86,8 +157,16 @@ const AddEditJob = () => {
               />
             </div>
             <div className={classes.fullWidth}>
-              
+              <AttachmentUpload
+                state={values?.companyLogo}
+                setter={(e) => {
+                  setFieldValue("companyLogo", e);
+                }}
+                label={"Company Logo"}
+                acceptedTypes="image"
+              />
             </div>
+
             <div className={classes.fullWidth}>
               <Input
                 label={"Job Title"}
@@ -195,10 +274,21 @@ const AddEditJob = () => {
                 <CountryStateCity
                   selectedCountry={values.country}
                   setSelectedCountry={(e) => setFieldValue("country", e)}
+                  countryError={
+                    errors?.country && touched?.country
+                      ? errors?.country
+                      : false
+                  }
                   selectedCity={values.city}
                   setSelectedCity={(e) => setFieldValue("city", e)}
+                  cityError={
+                    errors?.city && touched?.city ? errors?.city : false
+                  }
                   selectedState={values.state}
                   setSelectedState={(e) => setFieldValue("state", e)}
+                  stateError={
+                    errors?.state && touched?.state ? errors?.state : false
+                  }
                 />
               </div>
             </div>
@@ -208,6 +298,19 @@ const AddEditJob = () => {
                 value={values.description}
                 setValue={(e) => setFieldValue("description", e)}
                 placeholder={"Enter Description"}
+              />
+            </div>
+            <div className={mergeClass(classes.actionBtns, classes.fullWidth)}>
+              <Button
+                label={isSubmitting ? "submitting..." : "Submit"}
+                disabled={isSubmitting}
+                type="submit"
+              />
+              <Button
+                label={"Cancel"}
+                variant="secondary"
+                disabled={isSubmitting}
+                type="button"
               />
             </div>
           </form>
